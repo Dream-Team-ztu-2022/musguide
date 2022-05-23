@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@smyld/vue-property-decorator": "^10.0.17",
+    "axios": "^0.27.2",
     "core-js": "^3.6.5",
     "vue": "^3.0.0",
     "vue-class-component": "^8.0.0-0",
@@ -57,7 +58,8 @@
       "class-methods-use-this": "off",
       "no-console": "warn",
       "@typescript-eslint/explicit-module-boundary-types": "off",
-      "import/prefer-default-export": "off"
+      "import/prefer-default-export": "off",
+      "quotes": ["error", "backtick"]
     }
   },
   "browserslist": [

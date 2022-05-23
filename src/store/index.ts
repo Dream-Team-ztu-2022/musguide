@@ -1,13 +1,6 @@
 import { createStore } from 'vuex';
 import { extractVuexModule, createModule } from 'vuex-class-component';
-
-const VuexModule = createModule({
-  strict: true,
-});
-
-export class App extends VuexModule {
-  test = 'Not OK :(';
-}
+import { App } from './App';
 
 export interface IRootStore {
   app: App;
