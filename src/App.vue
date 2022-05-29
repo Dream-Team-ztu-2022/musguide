@@ -23,15 +23,11 @@ export default class App extends Vue {
   -moz-osx-font-smoothing: grayscale;
 }
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+h2 {
+  font-style: normal;
+  font-weight: 900;
+  font-size: 48px;
+  line-height: 60px;
+  margin: 30px 0;
 }
 </style>

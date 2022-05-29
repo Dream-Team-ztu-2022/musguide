@@ -28,5 +28,8 @@ export default class Home extends Vue {}
 .home {
   max-width: 1600px;
   margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
 }
 </style>

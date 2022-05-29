@@ -1,17 +1,19 @@
 <template>
-  <h2 class="title">Топ треків</h2>
-  <card-list>
-    <card title="Кіно" subtitle="Антитіла" preview="https://i.ytimg.com/vi/B9gvM_-WYwo/maxresdefault.jpg" />
-    <card title="Кіно" subtitle="Антитіла" preview="https://i.ytimg.com/vi/B9gvM_-WYwo/maxresdefault.jpg" />
-    <card title="Кіно" subtitle="Антитіла" preview="https://i.ytimg.com/vi/B9gvM_-WYwo/maxresdefault.jpg" />
-    <card title="Кіно" subtitle="Антитіла" preview="https://i.ytimg.com/vi/B9gvM_-WYwo/maxresdefault.jpg" />
-    <card title="Кіно" subtitle="Антитіла" preview="https://i.ytimg.com/vi/B9gvM_-WYwo/maxresdefault.jpg" />
-    <card title="Кіно" subtitle="Антитіла" preview="https://i.ytimg.com/vi/B9gvM_-WYwo/maxresdefault.jpg" />
-    <card title="Кіно" subtitle="Антитіла" preview="https://i.ytimg.com/vi/B9gvM_-WYwo/maxresdefault.jpg" />
-    <card title="Кіно" subtitle="Антитіла" preview="https://i.ytimg.com/vi/B9gvM_-WYwo/maxresdefault.jpg" />
-    <card title="Кіно" subtitle="Антитіла" preview="https://i.ytimg.com/vi/B9gvM_-WYwo/maxresdefault.jpg" />
-    <card title="Кіно" subtitle="Антитіла" preview="https://i.ytimg.com/vi/B9gvM_-WYwo/maxresdefault.jpg" />
-  </card-list>
+  <section>
+    <h2 class="title">Топ треків</h2>
+    <card-list>
+      <card title="Кіно" subtitle="Антитіла" preview="https://i.ytimg.com/vi/B9gvM_-WYwo/maxresdefault.jpg" />
+      <card title="Кіно" subtitle="Антитіла" preview="https://i.ytimg.com/vi/B9gvM_-WYwo/maxresdefault.jpg" />
+      <card title="Кіно" subtitle="Антитіла" preview="https://i.ytimg.com/vi/B9gvM_-WYwo/maxresdefault.jpg" />
+      <card title="Кіно" subtitle="Антитіла" preview="https://i.ytimg.com/vi/B9gvM_-WYwo/maxresdefault.jpg" />
+      <card title="Кіно" subtitle="Антитіла" preview="https://i.ytimg.com/vi/B9gvM_-WYwo/maxresdefault.jpg" />
+      <card title="Кіно" subtitle="Антитіла" preview="https://i.ytimg.com/vi/B9gvM_-WYwo/maxresdefault.jpg" />
+      <card title="Кіно" subtitle="Антитіла" preview="https://i.ytimg.com/vi/B9gvM_-WYwo/maxresdefault.jpg" />
+      <card title="Кіно" subtitle="Антитіла" preview="https://i.ytimg.com/vi/B9gvM_-WYwo/maxresdefault.jpg" />
+      <card title="Кіно" subtitle="Антитіла" preview="https://i.ytimg.com/vi/B9gvM_-WYwo/maxresdefault.jpg" />
+      <card title="Кіно" subtitle="Антитіла" preview="https://i.ytimg.com/vi/B9gvM_-WYwo/maxresdefault.jpg" />
+    </card-list>
+  </section>
 </template>
 
 <script lang="ts">
@@ -26,10 +28,4 @@ export default class TopTracks extends Vue {}
 </script>
 
 <style lang="scss" scoped>
-.title {
-  font-style: normal;
-  font-weight: 900;
-  font-size: 48px;
-  line-height: 60px;
-}
 </style>
