@@ -1,18 +1,35 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <top-tracks />
+
+    <top-artists />
+
+    <top-genres />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from '@smyld/vue-property-decorator';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+import TopTracks from './Home/TopTracks.vue';
+import TopArtists from './Home/TopArtists.vue';
+import TopGenres from './Home/TopGenres.vue';
 
 @Component({
   components: {
-    HelloWorld,
+    TopTracks,
+    TopArtists,
+    TopGenres,
   },
 })
 export default class Home extends Vue {}
 </script>
+
+<style lang="scss" scoped>
+.home {
+  max-width: 1600px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+}
+</style>
