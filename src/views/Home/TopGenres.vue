@@ -51,15 +51,8 @@ export default class TopGenres extends Vue {
     return `${(Number(tag.taggings) / 1000).toFixed(1)}k композицій`;
   }
 
-  private generateRandomColorImage() {
-    const rnd = () => Math.floor(Math.random() * 255);
-    const color = `rgb(${rnd()}, ${rnd()}, ${rnd()})`;
-    const svg = `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="${color}" /></svg>`;
-    return `data:image/svg+xml;utf8,${svg}`;
-  }
-
   getImage(tag: ITag) {
-    return this.generateRandomColorImage();
+    return `#`; // We don't have any tag titles :(
   }
 }
 </script>

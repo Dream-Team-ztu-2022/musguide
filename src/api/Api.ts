@@ -29,12 +29,4 @@ export class Api {
   static get = <T = unknown>(method: string, options?: AxiosRequestConfig) => (
     request.get<unknown, T>(`${API_URL}/?method=${method}&api_key=${apiKey}&format=json`, options)
   );
-
-  // static post = <T>(url: string, data?: ApiObject, options?: AxiosRequestConfig) => request.post<unknown, T>(`${API_URL}/${url}`, data, options);
-
-  // static patch = <T = void>(url: string, data?: ApiObject) => request.patch<unknown, T>(`${API_URL}/${url}`, data);
-
-  // static put = <T>(url: string, data?: ApiObject) => request.put<unknown, T>(`${API_URL}/${url}`, data);
-
-  // static delete = <T = void>(url: string, data?: ApiObject) => request.delete<unknown, T>(`${API_URL}/${url}`, { data });
 }
