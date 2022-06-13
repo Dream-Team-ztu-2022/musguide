@@ -7,19 +7,6 @@ const request = axios.create({
   // withCredentials: true // send cookies when cross-domain requests
 });
 
-request.interceptors.request.use((config) => {
-  const apiKey = process.env.VUE_APP_API_KEY || false;
-
-  if (apiKey) {
-    // TODO: Inject api key from process.env.VUE_APP_API_KEY
-    if (config.headers?.common) {
-      // eslint-disable-next-line no-param-reassign
-      (config.headers.common as unknown as Record<string, string>).Authorization = apiKey;
-    }
-  }
-  return config;
-});
-
 request.interceptors.response.use(
   (response) => {
     if ((response.status < 200 || response.status >= 300)) {
@@ -36,14 +23,18 @@ request.interceptors.response.use(
 
 export type ApiObject = Record<string, unknown>;
 
+const apiKey = process.env.VUE_APP_API_KEY;
+
 export class Api {
-  static get = <T = unknown>(url: string, options?: AxiosRequestConfig) => request.get<unknown, T>(`${API_URL}/${url}`, options);
+  static get = <T = unknown>(method: string, options?: AxiosRequestConfig) => (
+    request.get<unknown, T>(`${API_URL}/?method=${method}&api_key=${apiKey}&format=json`, options)
+  );
 
-  static post = <T>(url: string, data?: ApiObject, options?: AxiosRequestConfig) => request.post<unknown, T>(`${API_URL}/${url}`, data, options);
+  // static post = <T>(url: string, data?: ApiObject, options?: AxiosRequestConfig) => request.post<unknown, T>(`${API_URL}/${url}`, data, options);
 
-  static patch = <T = void>(url: string, data?: ApiObject) => request.patch<unknown, T>(`${API_URL}/${url}`, data);
+  // static patch = <T = void>(url: string, data?: ApiObject) => request.patch<unknown, T>(`${API_URL}/${url}`, data);
 
-  static put = <T>(url: string, data?: ApiObject) => request.put<unknown, T>(`${API_URL}/${url}`, data);
+  // static put = <T>(url: string, data?: ApiObject) => request.put<unknown, T>(`${API_URL}/${url}`, data);
 
-  static delete = <T = void>(url: string, data?: ApiObject) => request.delete<unknown, T>(`${API_URL}/${url}`, { data });
+  // static delete = <T = void>(url: string, data?: ApiObject) => request.delete<unknown, T>(`${API_URL}/${url}`, { data });
 }

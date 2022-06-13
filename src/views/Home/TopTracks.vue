@@ -1,31 +1,60 @@
 <template>
-  <section>
-    <h2 class="title">Топ треків</h2>
-    <card-list>
-      <card title="Кіно" subtitle="Антитіла" preview="https://i.ytimg.com/vi/B9gvM_-WYwo/maxresdefault.jpg" />
-      <card title="Кіно" subtitle="Антитіла" preview="https://i.ytimg.com/vi/B9gvM_-WYwo/maxresdefault.jpg" />
-      <card title="Кіно" subtitle="Антитіла" preview="https://i.ytimg.com/vi/B9gvM_-WYwo/maxresdefault.jpg" />
-      <card title="Кіно" subtitle="Антитіла" preview="https://i.ytimg.com/vi/B9gvM_-WYwo/maxresdefault.jpg" />
-      <card title="Кіно" subtitle="Антитіла" preview="https://i.ytimg.com/vi/B9gvM_-WYwo/maxresdefault.jpg" />
-      <card title="Кіно" subtitle="Антитіла" preview="https://i.ytimg.com/vi/B9gvM_-WYwo/maxresdefault.jpg" />
-      <card title="Кіно" subtitle="Антитіла" preview="https://i.ytimg.com/vi/B9gvM_-WYwo/maxresdefault.jpg" />
-      <card title="Кіно" subtitle="Антитіла" preview="https://i.ytimg.com/vi/B9gvM_-WYwo/maxresdefault.jpg" />
-      <card title="Кіно" subtitle="Антитіла" preview="https://i.ytimg.com/vi/B9gvM_-WYwo/maxresdefault.jpg" />
-      <card title="Кіно" subtitle="Антитіла" preview="https://i.ytimg.com/vi/B9gvM_-WYwo/maxresdefault.jpg" />
-    </card-list>
-  </section>
+  <abstract-top-card-list
+    :cardListProps="cardListProps"
+    :listName="listName"
+    :items="items"
+    :getKey="getKey"
+    :getTitle="getTitle"
+    :getSubtitle="getSubtitle"
+    :getImage="getImage"
+  />
 </template>
 
 <script lang="ts">
-import { Component, Vue } from '@smyld/vue-property-decorator';
-import CardList from '@/components/CardList.vue';
-import Card from '@/components/Card.vue';
+import { Component, Vue } from "@smyld/vue-property-decorator";
+import { ITrack, ScrobblerApi } from "@/api/ScrobblerApi";
+import CardList from "@/components/CardList.vue";
+import Card from "@/components/Card.vue";
+import AbstractTopCardList from "./AbstractTopCardList.vue";
 
 @Component({
-  components: { CardList, Card },
+  components: { CardList, Card, AbstractTopCardList },
 })
-export default class TopTracks extends Vue {}
-</script>
+export default class TopTracks extends Vue {
+  items: ITrack[] = [];
 
-<style lang="scss" scoped>
-</style>
+  listName = `Топ треків`;
+
+  cardListProps = {
+    round: true,
+  };
+
+  mounted() {
+    this.fetch();
+  }
+
+  async fetch() {
+    const topArtists = await ScrobblerApi.getTopTracks();
+
+    this.items = topArtists.tracks.track;
+  }
+
+  getKey(track: ITrack) {
+    return track.mbid || track.name;
+  }
+
+  getTitle(track: ITrack) {
+    return track.name;
+  }
+
+  getSubtitle(track: ITrack) {
+    return track.artist.name;
+  }
+
+  getImage(track: ITrack) {
+    return (
+      track.image.find((image) => image.size === `medium`)?.[`#text`] || `#`
+    );
+  }
+}
+</script>
