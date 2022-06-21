@@ -1,30 +1,62 @@
 <template>
-  <section>
-    <h2 class="title">Топ виконавців</h2>
-    <card-list>
-      <card title="Imagine Dragons" subtitle="Виконавець" preview="https://yt3.ggpht.com/aXBmHKABw-J-0ZMxj39wkXpLDEHViOdL5UD71cDG2s5vbeQBWk9mdX3rRxT5U6Wfkvm6o8Uu-dU=s900-c-k-c0x00ffffff-no-rj" :round="true" />
-      <card title="Imagine Dragons" subtitle="Виконавець" preview="https://yt3.ggpht.com/aXBmHKABw-J-0ZMxj39wkXpLDEHViOdL5UD71cDG2s5vbeQBWk9mdX3rRxT5U6Wfkvm6o8Uu-dU=s900-c-k-c0x00ffffff-no-rj" :round="true" />
-      <card title="Imagine Dragons" subtitle="Виконавець" preview="https://yt3.ggpht.com/aXBmHKABw-J-0ZMxj39wkXpLDEHViOdL5UD71cDG2s5vbeQBWk9mdX3rRxT5U6Wfkvm6o8Uu-dU=s900-c-k-c0x00ffffff-no-rj" :round="true" />
-      <card title="Imagine Dragons" subtitle="Виконавець" preview="https://yt3.ggpht.com/aXBmHKABw-J-0ZMxj39wkXpLDEHViOdL5UD71cDG2s5vbeQBWk9mdX3rRxT5U6Wfkvm6o8Uu-dU=s900-c-k-c0x00ffffff-no-rj" :round="true" />
-      <card title="Imagine Dragons" subtitle="Виконавець" preview="https://yt3.ggpht.com/aXBmHKABw-J-0ZMxj39wkXpLDEHViOdL5UD71cDG2s5vbeQBWk9mdX3rRxT5U6Wfkvm6o8Uu-dU=s900-c-k-c0x00ffffff-no-rj" :round="true" />
-      <card title="Imagine Dragons" subtitle="Виконавець" preview="https://yt3.ggpht.com/aXBmHKABw-J-0ZMxj39wkXpLDEHViOdL5UD71cDG2s5vbeQBWk9mdX3rRxT5U6Wfkvm6o8Uu-dU=s900-c-k-c0x00ffffff-no-rj" :round="true" />
-      <card title="Imagine Dragons" subtitle="Виконавець" preview="https://yt3.ggpht.com/aXBmHKABw-J-0ZMxj39wkXpLDEHViOdL5UD71cDG2s5vbeQBWk9mdX3rRxT5U6Wfkvm6o8Uu-dU=s900-c-k-c0x00ffffff-no-rj" :round="true" />
-      <card title="Imagine Dragons" subtitle="Виконавець" preview="https://yt3.ggpht.com/aXBmHKABw-J-0ZMxj39wkXpLDEHViOdL5UD71cDG2s5vbeQBWk9mdX3rRxT5U6Wfkvm6o8Uu-dU=s900-c-k-c0x00ffffff-no-rj" :round="true" />
-      <card title="Imagine Dragons" subtitle="Виконавець" preview="https://yt3.ggpht.com/aXBmHKABw-J-0ZMxj39wkXpLDEHViOdL5UD71cDG2s5vbeQBWk9mdX3rRxT5U6Wfkvm6o8Uu-dU=s900-c-k-c0x00ffffff-no-rj" :round="true" />
-      <card title="Imagine Dragons" subtitle="Виконавець" preview="https://yt3.ggpht.com/aXBmHKABw-J-0ZMxj39wkXpLDEHViOdL5UD71cDG2s5vbeQBWk9mdX3rRxT5U6Wfkvm6o8Uu-dU=s900-c-k-c0x00ffffff-no-rj" :round="true" />
-    </card-list>
-  </section>
+  <abstract-top-card-list
+    :cardListProps="cardListProps"
+    :listName="listName"
+    :items="items"
+    :getKey="getKey"
+    :getTitle="getTitle"
+    :getSubtitle="getSubtitle"
+    :getImage="getImage"
+  />
 </template>
 
 <script lang="ts">
-import { Component, Vue } from '@smyld/vue-property-decorator';
-import CardList from '@/components/CardList.vue';
-import Card from '@/components/Card.vue';
+import { Component, Vue } from "@smyld/vue-property-decorator";
+import { IArtist, ScrobblerApi } from "@/api/ScrobblerApi";
+import CardList from "@/components/CardList.vue";
+import Card from "@/components/Card.vue";
+import AbstractTopCardList from "./AbstractTopCardList.vue";
 
 @Component({
-  components: { CardList, Card },
+  components: { CardList, Card, AbstractTopCardList },
 })
-export default class TopArtists extends Vue {}
+export default class TopArtists extends Vue {
+  items: IArtist[] = [];
+
+  listName = `Топ виконавців`;
+
+  cardListProps = {
+    round: true,
+  };
+
+  mounted() {
+    this.fetch();
+  }
+
+  async fetch() {
+    const topArtists = await ScrobblerApi.getTopArtists();
+
+    this.items = topArtists.artists.artist;
+  }
+
+  getKey(artist: IArtist) {
+    return artist.mbid || artist.name;
+  }
+
+  getTitle(artist: IArtist) {
+    return artist.name;
+  }
+
+  getSubtitle() {
+    return `Виконавець`;
+  }
+
+  getImage(artist: IArtist) {
+    return (
+      artist.image.find((image) => image.size === `medium`)?.[`#text`] || `#`
+    );
+  }
+}
 </script>
 
 <style lang="scss" scoped>
