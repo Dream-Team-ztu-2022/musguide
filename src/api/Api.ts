@@ -26,7 +26,11 @@ export type ApiObject = Record<string, unknown>;
 const apiKey = process.env.VUE_APP_API_KEY;
 
 export class Api {
-  static get = <T = unknown>(method: string, options?: AxiosRequestConfig) => (
+  static getScrobbler = <T = unknown>(method: string, options?: AxiosRequestConfig) => (
     request.get<unknown, T>(`${API_URL}/?method=${method}&api_key=${apiKey}&format=json`, options)
+  );
+
+  static get = <T = unknown>(url: string, options?: AxiosRequestConfig) => (
+    request.get<unknown, T>(url, options)
   );
 }

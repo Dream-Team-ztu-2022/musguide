@@ -9,9 +9,7 @@ export interface ITestMethodResponse {
 }
 
 export class DemoApi {
-  static testMethodGet = (test: string) => Api.get<ITestMethodResponse>(`/test/${test}`);
-
-  static testMethodPost = (test: string) => Api.post(`/test`, { test });
+  static testMethodGet = (test: string) => Api.getScrobbler<ITestMethodResponse>(`/test/${test}`);
 }
 
 /*

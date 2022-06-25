@@ -75,9 +75,9 @@ export interface ITopTags {
 }
 
 export class ScrobblerApi {
-  static getTopArtists = () => Api.get<ITopArtists>('chart.gettopartists');
+  static getTopArtists = () => Api.getScrobbler<ITopArtists>('chart.gettopartists');
 
-  static getTopTracks = () => Api.get<ITopTracks>('chart.getTopTracks');
+  static getTopTracks = () => Api.getScrobbler<ITopTracks>('chart.getTopTracks');
 
-  static getTopTags = () => Api.get<ITopTags>('chart.gettoptags');
+  static getTopTags = () => Api.getScrobbler<ITopTags>('chart.gettoptags');
 }
