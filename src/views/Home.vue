@@ -5,6 +5,23 @@
     <top-artists />
 
     <top-genres />
+
+    <section class="footer">
+      <div class="row">Find us:
+        <div class="icons">
+          <a href="https://instagram.com/ng_band_zt" target="_blank">
+            <img src="../assets/instagram.svg" width="30" alt="Instagram">
+          </a>
+          <a href="https://t.me/ng_band_zt" target="_blank">
+            <img src="../assets/telegram.svg" width="30" alt="Telegram">
+          </a>
+        </div>
+      </div>
+      <div class="row">ZTU Interactive &copy;2022 DreamTeam Ltd.
+        All rights reserved.
+        We Sell Your Personal Information.
+        We're hiring! Look up our offers</div>
+    </section>
   </div>
 </template>
 
@@ -34,6 +51,27 @@ export default class Home extends Vue {}
 
   & > section {
     margin: 0 15px;
+  }
+
+  .footer {
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;;
+    gap: 20px;
+
+    .row {
+      display: flex;
+      flex-direction: row;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .icons {
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+    }
   }
 }
 </style>
