@@ -15,6 +15,9 @@
           <a href="https://t.me/ng_band_zt" target="_blank">
             <img src="../assets/telegram.svg" width="30" alt="Telegram">
           </a>
+          <a href="https://www.youtube.com/channel/UCFacVjadYSnEjtSHafNRC4g" target="_blank">
+            <img src="../assets/youtube.svg" width="30" alt="YouTube">
+          </a>
         </div>
       </div>
       <div class="row">ZTU Interactive &copy;2022 DreamTeam Ltd.
@@ -70,6 +73,7 @@ export default class Home extends Vue {}
     .icons {
       display: flex;
       flex-direction: row;
+      align-items: center;;
       gap: 10px;
     }
   }
