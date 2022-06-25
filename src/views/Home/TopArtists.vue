@@ -16,6 +16,7 @@ import { IArtist, ScrobblerApi } from "@/api/ScrobblerApi";
 import { MusicBrainzApi } from "@/api/MusicBrainzApi";
 import CardList from "@/components/CardList.vue";
 import Card from "@/components/Card.vue";
+import { delay } from "@/utils";
 import AbstractTopCardList from "./AbstractTopCardList.vue";
 
 interface IArtistWithImg extends IArtist {
@@ -45,21 +46,29 @@ export default class TopArtists extends Vue {
 
     this.items = topArtists.artists.artist.map((x) => ({ ...x, img: `` }));
 
-    console.log(`map`);
-
     // FIXME: Optimize, make parallel and reactive
-    this.items.forEach((artist) => {
-      MusicBrainzApi.getArtist(artist.mbid).then((additional) => {
-        console.log(additional);
-        let imageUrl = additional.relations.find((x: any) => x.type === `image`).url.resource;
-        if (imageUrl.startsWith(`https://commons.wikimedia.org/wiki/File:`)) {
-          const filename = imageUrl.substring(imageUrl.lastIndexOf(`/`) + 1);
-          imageUrl = `https://commons.wikimedia.org/wiki/Special:Redirect/file/${filename}`;
-        }
-        artist.img = imageUrl;
-        console.log(`apply img`, artist.img);
-      });
-    });
+    // this.items.forEach((artist) => {
+    for (const artist of this.items) {
+      if (!artist.mbid) {
+        artist.img = `https://crowd-literature.eu/wp-content/uploads/2015/01/no-avatar.gif`;
+        continue;
+      }
+      MusicBrainzApi.getArtist(artist.mbid)
+        .then((additional) => {
+          console.log(additional);
+          let imageUrl = additional.relations.find((x: any) => x.type === `image`).url.resource;
+          if (imageUrl.startsWith(`https://commons.wikimedia.org/wiki/File:`)) {
+            const filename = imageUrl.substring(imageUrl.lastIndexOf(`/`) + 1);
+            imageUrl = `https://commons.wikimedia.org/wiki/Special:Redirect/file/${filename}`;
+          }
+          artist.img = imageUrl;
+          console.log(`apply img`, artist.img);
+        })
+        .catch(() => {
+          artist.img = `https://crowd-literature.eu/wp-content/uploads/2015/01/no-avatar.gif`;
+        });
+      await delay(2000);
+    }
   }
 
   getKey(artist: IArtist) {
