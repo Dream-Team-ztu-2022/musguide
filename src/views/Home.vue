@@ -26,10 +26,14 @@ export default class Home extends Vue {}
 
 <style lang="scss" scoped>
 .home {
-  max-width: 1600px;
+  max-width: 1280px;
   margin: auto;
   display: flex;
   flex-direction: column;
-  gap: 80px;
+  gap: 26px;
+
+  & > section {
+    margin: 0 15px;
+  }
 }
 </style>

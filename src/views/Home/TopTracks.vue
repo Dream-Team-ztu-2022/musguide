@@ -26,7 +26,7 @@ export default class TopTracks extends Vue {
   listName = `Топ треків`;
 
   cardListProps = {
-    round: true,
+    round: false,
   };
 
   mounted() {

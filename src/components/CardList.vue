@@ -4,10 +4,10 @@
       <h2 class="title" v-if="title">{{title}}</h2>
     </header>
     <img v-show="canScrollLeft"
-      class="scroll scroll-left" src="../assets/left.svg" alt="scroll left"
+      class="scroll scroll-left" src="../assets/left.svg" width="48" alt="scroll left"
       @click="scrollLeft">
     <img v-show="canScrollRight"
-      class="scroll scroll-right" src="../assets/right.svg" alt="scroll right"
+      class="scroll scroll-right" src="../assets/right.svg" width="48" alt="scroll right"
       @click="scrollRight">
     <main ref="scrollable" @scroll="updateScroll">
       <slot />
@@ -73,6 +73,7 @@ section.cardlist {
   main {
     display: flex;
     overflow-x: auto;
+    gap: 20px;
 
     &::-webkit-scrollbar {
       display: none;
@@ -87,11 +88,11 @@ section.cardlist {
     cursor: pointer;
 
     &.scroll-left {
-      left: -37px;
+      left: -20px;
     }
 
     &.scroll-right {
-      right: -37px;
+      right: -20px;
     }
   }
 }
