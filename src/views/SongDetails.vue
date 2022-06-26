@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from '@smyld/vue-property-decorator';
+import { Component, Prop, Vue } from '@smyld/vue-property-decorator';
 import SongHeader from './SongDetails/Header.vue';
 import Songs from './SongDetails/Songs.vue';
 import Genres from '../components/Genres.vue';
@@ -23,7 +23,9 @@ import Genres from '../components/Genres.vue';
     Songs,
   },
 })
-export default class SongDetails extends Vue {}
+export default class SongDetails extends Vue {
+  @Prop() mbid!: string;
+}
 </script>
 
 <style lang="scss" scoped>
