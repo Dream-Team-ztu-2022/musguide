@@ -1,8 +1,8 @@
 <template>
-  <article class="horizontal-list-item" :class="{ round, long }" :title="tooltip">
+  <article class="horizontal-list-item" :class="{ round, long, small }" :title="tooltip">
     <header>
       <slot name="preview">
-        <figure class="preview" :style="{ '--url': `url(${preview})` }" />
+        <figure v-if="!small" class="preview" :style="{ '--url': `url(${preview})` }" />
       </slot>
 
       <slot name="button">
@@ -37,6 +37,8 @@ export default class Card extends Vue {
   @Prop() preview!: string;
 
   @Prop({ default: false }) round!: boolean;
+
+  @Prop({ default: false }) small!: boolean;
 
   get displayableTitle() {
     if (this.title.length < LENGTH_TO_CUT) return this.title;
@@ -73,6 +75,19 @@ article {
 
     .play {
       opacity: 1;
+    }
+  }
+
+  &.small {
+    min-width: 190px;
+    height: 75px;
+
+    .play {
+      display: none;
+    }
+
+    .title {
+      margin-top: 0;
     }
   }
 

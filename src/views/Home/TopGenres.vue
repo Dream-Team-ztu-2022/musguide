@@ -27,6 +27,7 @@ export default class TopGenres extends Vue {
 
   cardListProps = {
     round: false,
+    small: true,
   };
 
   mounted() {
@@ -52,7 +53,8 @@ export default class TopGenres extends Vue {
   }
 
   getImage(tag: ITag) {
-    return `#`; // We don't have any tag titles :(
+    return false;
+    // return `#`; // We don't have any tag titles :(
   }
 }
 </script>
