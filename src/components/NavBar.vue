@@ -41,6 +41,7 @@ export default class NavBar extends Vue {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 nav {
+  position: relative;
   display: flex;
   flex-direction: row;
   align-items: center;

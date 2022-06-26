@@ -25,6 +25,10 @@ export default class App extends Vue {
   -moz-osx-font-smoothing: grayscale;
 }
 
+body {
+  margin: 0;
+}
+
 h2 {
   font-style: normal;
   font-weight: 900;
