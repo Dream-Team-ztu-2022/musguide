@@ -59,7 +59,7 @@ export default class TopGenres extends Vue {
   }
 
   getRoute(tag: ITag) {
-    return `/tag/${tag.name}`;
+    return false;
   }
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <article class="horizontal-list-item" :class="{ round, long, small }" :title="tooltip"
+  <article class="horizontal-list-item" :class="{ round, long, small, clickable: !!route }" :title="tooltip"
     @click="onClick">
     <header>
       <slot name="preview">
@@ -74,18 +74,21 @@ article {
   border-radius: 15px;
   display: flex;
   flex-direction: column;
-  cursor: pointer;
   padding: 16px;
 
   transition: background-color 0.1s;
 
-  &:hover {
-    background-color: #3C3C3C;
+  &.clickable {
+    cursor: pointer;
+    &:hover {
+      background-color: #3C3C3C;
 
-    .play {
-      opacity: 1;
+      .play {
+        opacity: 1;
+      }
     }
   }
+
 
   &.small {
     min-width: 190px;
