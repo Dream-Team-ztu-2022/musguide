@@ -1,5 +1,6 @@
 <template>
-  <article class="horizontal-list-item" :class="{ round, long, small }" :title="tooltip">
+  <article class="horizontal-list-item" :class="{ round, long, small }" :title="tooltip"
+    @click="onClick">
     <header>
       <slot name="preview">
         <figure v-if="!small" class="preview" :style="{ '--url': `url(${preview})` }" />
@@ -39,6 +40,14 @@ export default class Card extends Vue {
   @Prop({ default: false }) round!: boolean;
 
   @Prop({ default: false }) small!: boolean;
+
+  @Prop() route!: string;
+
+  onClick() {
+    if (!this.route) return;
+
+    this.$router.push(this.route);
+  }
 
   get displayableTitle() {
     if (this.title.length < LENGTH_TO_CUT) return this.title;

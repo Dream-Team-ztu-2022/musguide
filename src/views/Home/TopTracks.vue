@@ -7,6 +7,7 @@
     :getTitle="getTitle"
     :getSubtitle="getSubtitle"
     :getImage="getImage"
+    :getRoute="getRoute"
   />
 </template>
 
@@ -36,7 +37,7 @@ export default class TopTracks extends Vue {
   async fetch() {
     const topArtists = await ScrobblerApi.getTopTracks();
 
-    this.items = topArtists.tracks.track;
+    this.items = topArtists.tracks.track.filter((track) => track.mbid);
   }
 
   getKey(track: ITrack) {
@@ -55,6 +56,10 @@ export default class TopTracks extends Vue {
     return (
       track.image.find((image) => image.size === `medium`)?.[`#text`] || `#`
     );
+  }
+
+  getRoute(track: ITrack) {
+    return `/song/${track.mbid}`;
   }
 }
 </script>

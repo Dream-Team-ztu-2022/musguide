@@ -7,6 +7,7 @@
     :getTitle="getTitle"
     :getSubtitle="getSubtitle"
     :getImage="getImage"
+    :getRoute="getRoute"
   />
 </template>
 
@@ -88,6 +89,10 @@ export default class TopArtists extends Vue {
     //   artist.image.find((image) => image.size === `medium`)?.[`#text`] || `#`
     // );
     return artist.img;
+  }
+
+  getRoute(artist: IArtist) {
+    return `/artist/${artist.mbid}`;
   }
 }
 </script>

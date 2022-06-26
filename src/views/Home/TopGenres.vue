@@ -7,6 +7,7 @@
     :getTitle="getTitle"
     :getSubtitle="getSubtitle"
     :getImage="getImage"
+    :getRoute="getRoute"
   />
 </template>
 
@@ -55,6 +56,10 @@ export default class TopGenres extends Vue {
   getImage(tag: ITag) {
     return false;
     // return `#`; // We don't have any tag titles :(
+  }
+
+  getRoute(tag: ITag) {
+    return `/tag/${tag.name}`;
   }
 }
 </script>
