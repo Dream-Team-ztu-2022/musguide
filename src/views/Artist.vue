@@ -30,6 +30,5 @@ export default class Artist extends Vue {
 .artist {
   display: flex;
   flex-direction: column;
-  margin-top: -136.5px;
 }
 </style>

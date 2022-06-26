@@ -59,7 +59,7 @@ export default class TopTracks extends Vue {
   }
 
   getRoute(track: ITrack) {
-    return `/song/${track.mbid}`;
+    return `/track/${track.mbid}`;
   }
 }
 </script>

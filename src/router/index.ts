@@ -11,14 +11,17 @@ const routes: Array<RouteRecordRaw> = [
     props: true,
   },
   {
-    path: `/song/:mbid`,
-    name: `Song`,
+    path: `/track/:mbid`,
+    name: `Track`,
     component: SongDetails,
   },
   {
     path: `/`,
     name: `Home`,
     component: Home,
+    meta: {
+      keepAlive: true
+    }
   },
 ];
 

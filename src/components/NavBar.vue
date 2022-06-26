@@ -1,13 +1,14 @@
 <template>
   <nav>
-    <img src="../assets/logo.svg" width="75" height="45" alt="logo" class="logo"/>
+    <img src="../assets/logo.svg" width="75" height="45" alt="logo" class="logo" @click="home" />
     <div class="search-box">
       <input v-model="search" type="search" placeholder="Пошук..." @input="updateSearch" />
       <div v-show="search" class="suggestions">
         <search-suggestion v-for="item in foundSuggestions" :key="item.title + item.subtitle"
           :title="item.title"
           :subtitle="item.subtitle"
-          :image="item.image" />
+          :image="item.image"
+          :route="item.route" />
 
         <search-suggestion v-if="!foundSuggestions.length" subtitle="Нічого не знайдено :(" />
       </div>
@@ -25,6 +26,7 @@ interface ISuggestion {
   image: string;
   title: string;
   subtitle: string;
+  route: string;
 }
 
 @Component({ components: { SearchSuggestion } })
@@ -33,30 +35,44 @@ export default class NavBar extends Vue {
 
   foundSuggestions: ISuggestion[] = [];
 
+  home() {
+    this.$router.push(`/`);
+  }
+
   async updateSearch() {
-    const artists = await ScrobblerApi.searchArtist(this.search);
+    try {
+      const artists = await ScrobblerApi.searchArtist(this.search);
 
-    const tracks = await ScrobblerApi.searchTrack(this.search);
+      const tracks = await ScrobblerApi.searchTrack(this.search);
 
-    const suggestions: ISuggestion[] = [];
+      const suggestions: ISuggestion[] = [];
 
-    artists.results.artistmatches.artist.forEach((artist) => {
-      suggestions.push({
-        image: artist.image[0][`#text`] || DEFAULT_AVATAR,
-        title: artist.name,
-        subtitle: `Виконавець`,
+      artists.results.artistmatches.artist.forEach((artist) => {
+        if (!artist.mbid) return;
+
+        suggestions.push({
+          image: artist.image[0][`#text`] || DEFAULT_AVATAR,
+          title: artist.name,
+          subtitle: `Виконавець`,
+          route: `/artist/${artist.mbid}`,
+        });
       });
-    });
 
-    tracks.results.trackmatches.track.forEach((track) => {
-      suggestions.push({
-        image: track.image[0][`#text`] || DEFAULT_AVATAR,
-        title: track.name,
-        subtitle: `Трек - ${track.artist}`,
+      tracks.results.trackmatches.track.forEach((track) => {
+        if (!track.mbid) return;
+
+        suggestions.push({
+          image: track.image[0][`#text`] || DEFAULT_AVATAR,
+          title: track.name,
+          subtitle: `Трек - ${track.artist}`,
+          route: `/track/${track.mbid}`,
+        });
       });
-    });
 
-    this.foundSuggestions = suggestions;
+      this.foundSuggestions = suggestions;
+    } catch (e) {
+      this.foundSuggestions = [];
+    }
   }
 }
 </script>
@@ -72,6 +88,7 @@ nav {
 
   .logo {
     margin: 30px;
+    cursor: pointer;
   }
 
   .search-box {
