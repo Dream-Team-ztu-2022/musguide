@@ -1,6 +1,6 @@
 <template>
-  <article class="horizontal-list-item" :class="{ round, long, small, clickable: !!route }" :title="tooltip"
-    @click="onClick">
+  <article class="horizontal-list-item" :class="{ round, long, small, clickable: !!route }"
+    :title="tooltip" @click="onClick">
     <header>
       <slot name="preview">
         <figure v-if="!small" class="preview" :style="{ '--url': `url(${preview})` }" />
@@ -88,7 +88,6 @@ article {
       }
     }
   }
-
 
   &.small {
     min-width: 190px;

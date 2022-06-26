@@ -46,7 +46,7 @@ export default class TopArtists extends Vue {
   async fetch() {
     const topArtists = await ScrobblerApi.getTopArtists();
 
-    this.items = topArtists.artists.artist.map((x) => ({ ...x, img: `` }));
+    this.items = topArtists.artists.artist.map((x) => ({ ...x, img: x.image[0][`#text`] }));
 
     /* eslint-disable */
     for (const artist of this.items) {
@@ -56,14 +56,12 @@ export default class TopArtists extends Vue {
       }
       MusicBrainzApi.getArtist(artist.mbid)
         .then((additional) => {
-          console.log(additional);
           let imageUrl = additional.relations.find((x: any) => x.type === `image`).url.resource;
           if (imageUrl.startsWith(`https://commons.wikimedia.org/wiki/File:`)) {
             const filename = imageUrl.substring(imageUrl.lastIndexOf(`/`) + 1);
             imageUrl = `https://commons.wikimedia.org/wiki/Special:Redirect/file/${filename}`;
           }
           artist.img = imageUrl;
-          console.log(`apply img`, artist.img);
         })
         .catch(() => {
           artist.img = DEFAULT_AVATAR;
