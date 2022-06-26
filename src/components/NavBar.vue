@@ -2,13 +2,15 @@
   <nav>
     <img src="../assets/logo.svg" width="75" height="45" alt="logo" class="logo" @click="home" />
     <div class="search-box">
-      <input v-model="search" type="search" placeholder="Пошук..." @input="updateSearch" />
+      <input v-model="search" type="search" placeholder="Пошук..."
+        @input="updateSearch" @keydown.esc="clear" />
       <div v-show="search" class="suggestions">
         <search-suggestion v-for="item in foundSuggestions" :key="item.title + item.subtitle"
           :title="item.title"
           :subtitle="item.subtitle"
           :image="item.image"
-          :route="item.route" />
+          :route="item.route"
+          @click="clear" />
 
         <search-suggestion v-if="!foundSuggestions.length" subtitle="Нічого не знайдено :(" />
       </div>
@@ -37,6 +39,10 @@ export default class NavBar extends Vue {
 
   home() {
     this.$router.push(`/`);
+  }
+
+  clear() {
+    this.search = ``;
   }
 
   async updateSearch() {
@@ -117,7 +123,7 @@ nav {
       position: absolute;
       top: 60px;
       left: 0;
-      z-index: 2;
+      z-index: 20;
       border: 1px solid #302F2F;
       width: 100%;
       background: #121212;

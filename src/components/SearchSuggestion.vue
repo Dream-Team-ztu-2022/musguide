@@ -22,6 +22,7 @@ export default class SearchSuggestion extends Vue {
   @Prop({ default: `` }) route!: string;
 
   onClick() {
+    this.$emit(`click`);
     if (!this.route) return;
 
     this.$router.push(this.route);

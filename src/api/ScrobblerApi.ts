@@ -93,11 +93,11 @@ export interface ITrackSearch {
 }
 
 export class ScrobblerApi {
-  static getTopArtists = () => Api.getScrobbler<ITopArtists>('chart.gettopartists');
+  static getTopArtists = () => Api.getScrobbler<ITopArtists>('chart.gettopartists&limit=100');
 
-  static getTopTracks = () => Api.getScrobbler<ITopTracks>('chart.getTopTracks');
+  static getTopTracks = () => Api.getScrobbler<ITopTracks>('chart.getTopTracks&limit=100');
 
-  static getTopTags = () => Api.getScrobbler<ITopTags>('chart.gettoptags');
+  static getTopTags = () => Api.getScrobbler<ITopTags>('chart.gettoptags&limit=100');
 
   static searchArtist = (name: string) => Api.getScrobbler<IArtistSearch>(`artist.search&artist=${name}`);
 
