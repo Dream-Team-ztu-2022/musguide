@@ -18,6 +18,7 @@ import { MusicBrainzApi } from "@/api/MusicBrainzApi";
 import CardList from "@/components/CardList.vue";
 import Card from "@/components/Card.vue";
 import { delay } from "@/utils";
+import { DEFAULT_AVATAR } from "@/constants";
 import AbstractTopCardList from "./AbstractTopCardList.vue";
 
 interface IArtistWithImg extends IArtist {
@@ -50,7 +51,7 @@ export default class TopArtists extends Vue {
     /* eslint-disable */
     for (const artist of this.items) {
       if (!artist.mbid) {
-        artist.img = `https://crowd-literature.eu/wp-content/uploads/2015/01/no-avatar.gif`;
+        artist.img = DEFAULT_AVATAR;
         continue;
       }
       MusicBrainzApi.getArtist(artist.mbid)
@@ -65,7 +66,7 @@ export default class TopArtists extends Vue {
           console.log(`apply img`, artist.img);
         })
         .catch(() => {
-          artist.img = `https://crowd-literature.eu/wp-content/uploads/2015/01/no-avatar.gif`;
+          artist.img = DEFAULT_AVATAR;
         });
       await delay(2000);
     }

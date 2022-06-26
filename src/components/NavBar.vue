@@ -2,7 +2,7 @@
   <nav>
     <img src="../assets/logo.svg" width="75" height="45" alt="logo" class="logo"/>
     <div class="search-box">
-      <input v-model="search" type="search" placeholder="Пошук..." @change="updateSearch" />
+      <input v-model="search" type="search" placeholder="Пошук..." @input="updateSearch" />
       <div v-show="search" class="suggestions">
         <search-suggestion v-for="item in foundSuggestions" :key="item.title + item.subtitle"
           :title="item.title"
@@ -16,6 +16,8 @@
 </template>
 
 <script lang="ts">
+import { ScrobblerApi } from '@/api/ScrobblerApi';
+import { DEFAULT_AVATAR } from '@/constants';
 import { Component, Vue } from '@smyld/vue-property-decorator';
 import SearchSuggestion from './SearchSuggestion.vue';
 
@@ -23,7 +25,6 @@ interface ISuggestion {
   image: string;
   title: string;
   subtitle: string;
-  type: string;
 }
 
 @Component({ components: { SearchSuggestion } })
@@ -33,7 +34,29 @@ export default class NavBar extends Vue {
   foundSuggestions: ISuggestion[] = [];
 
   async updateSearch() {
-    // TODO:
+    const artists = await ScrobblerApi.searchArtist(this.search);
+
+    const tracks = await ScrobblerApi.searchTrack(this.search);
+
+    const suggestions: ISuggestion[] = [];
+
+    artists.results.artistmatches.artist.forEach((artist) => {
+      suggestions.push({
+        image: artist.image[0][`#text`] || DEFAULT_AVATAR,
+        title: artist.name,
+        subtitle: `Виконавець`,
+      });
+    });
+
+    tracks.results.trackmatches.track.forEach((track) => {
+      suggestions.push({
+        image: track.image[0][`#text`] || DEFAULT_AVATAR,
+        title: track.name,
+        subtitle: `Трек - ${track.artist}`,
+      });
+    });
+
+    this.foundSuggestions = suggestions;
   }
 }
 </script>
@@ -82,6 +105,11 @@ nav {
       width: 100%;
       background: #121212;
       padding: 15px 30px;
+      max-height: 90vh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
   }
 

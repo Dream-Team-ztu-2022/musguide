@@ -74,10 +74,32 @@ export interface ITopTags {
   }
 }
 
+export interface IArtistSearch {
+  results: {
+    artistmatches: {
+      artist: IArtist[];
+    }
+    // ...
+  }
+}
+
+export interface ITrackSearch {
+  results: {
+    trackmatches: {
+      track: ITrack[];
+    }
+    // ...
+  }
+}
+
 export class ScrobblerApi {
   static getTopArtists = () => Api.getScrobbler<ITopArtists>('chart.gettopartists');
 
   static getTopTracks = () => Api.getScrobbler<ITopTracks>('chart.getTopTracks');
 
   static getTopTags = () => Api.getScrobbler<ITopTags>('chart.gettoptags');
+
+  static searchArtist = (name: string) => Api.getScrobbler<IArtistSearch>(`artist.search&artist=${name}`);
+
+  static searchTrack = (name: string) => Api.getScrobbler<ITrackSearch>(`track.search&track=${name}`);
 }

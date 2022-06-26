@@ -1,6 +1,6 @@
 <template>
-  <div class="suggestion">
-    <img v-if="image" :src="image || '../assets/logo.svg'" alt="" />
+  <div class="suggestion" :class="{ 'has-border': Boolean(image) }">
+    <img v-if="image" :src="image" alt="" />
     <div class="content">
       <div v-if="title" class="title">{{title}}</div>
       <div v-if="subtitle" class="subtitle">{{subtitle}}</div>
@@ -28,6 +28,10 @@ export default class SearchSuggestion extends Vue {
   flex-direction: row;
   gap: 15px;
   align-items: center;
+
+  &.has-border {
+    border: 1px solid#302F2F;
+  }
 
   img {
     width: 100px;
