@@ -46,8 +46,7 @@ export default class TopArtists extends Vue {
 
     this.items = topArtists.artists.artist.map((x) => ({ ...x, img: `` }));
 
-    // FIXME: Optimize, make parallel and reactive
-    // this.items.forEach((artist) => {
+    /* eslint-disable */
     for (const artist of this.items) {
       if (!artist.mbid) {
         artist.img = `https://crowd-literature.eu/wp-content/uploads/2015/01/no-avatar.gif`;
@@ -69,6 +68,7 @@ export default class TopArtists extends Vue {
         });
       await delay(2000);
     }
+    /* eslint-enable */
   }
 
   getKey(artist: IArtist) {
