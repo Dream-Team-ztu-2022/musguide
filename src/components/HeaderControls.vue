@@ -32,7 +32,7 @@
 <script lang="ts">
 import { Prop, Vue } from '@smyld/vue-property-decorator';
 
-export default class Card extends Vue {
+export default class HeaderControls extends Vue {
   @Prop() listening!: string;
 
   @Prop() listen!: string;

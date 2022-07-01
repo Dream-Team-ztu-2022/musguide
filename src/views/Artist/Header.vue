@@ -22,7 +22,7 @@
 
 <script lang="ts">
 import { Component, Vue } from '@smyld/vue-property-decorator';
-import HeaderControlls from '@/components/HeaderControlls.vue';
+import HeaderControlls from '@/components/HeaderControls.vue';
 
 @Component({
   components: { HeaderControlls },
