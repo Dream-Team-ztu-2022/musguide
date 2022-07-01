@@ -21,7 +21,7 @@ import AbstractTopCardList from "./AbstractTopCardList.vue";
 @Component({
   components: { CardList, Card, AbstractTopCardList },
 })
-export default class TopGenres extends Vue {
+export default class TopTags extends Vue {
   items: ITag[] = [];
 
   listName = `Топ жанрів`;
@@ -53,12 +53,11 @@ export default class TopGenres extends Vue {
     return `${(Number(tag.taggings) / 1000).toFixed(1)}k композицій`;
   }
 
-  getImage(tag: ITag) {
+  getImage() {
     return false;
-    // return `#`; // We don't have any tag titles :(
   }
 
-  getRoute(tag: ITag) {
+  getRoute() {
     return false;
   }
 }

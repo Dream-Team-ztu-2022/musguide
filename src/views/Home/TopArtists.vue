@@ -84,9 +84,6 @@ export default class TopArtists extends Vue {
   }
 
   getImage(artist: IArtistWithImg) {
-    // return (
-    //   artist.image.find((image) => image.size === `medium`)?.[`#text`] || `#`
-    // );
     return artist.img;
   }
 

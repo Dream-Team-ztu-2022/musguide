@@ -9,13 +9,13 @@
     <section class="footer">
       <div class="row">Find us:
         <div class="icons">
-          <a href="https://instagram.com/ng_band_zt" target="_blank">
+          <a href="https://instagram.com/ng_band_zt" rel="noopener" target="_blank">
             <img src="../assets/instagram.svg" width="30" alt="Instagram">
           </a>
-          <a href="https://t.me/ng_band_zt" target="_blank">
+          <a href="https://t.me/ng_band_zt" rel="noopener" target="_blank">
             <img src="../assets/telegram.svg" width="30" alt="Telegram">
           </a>
-          <a href="https://www.youtube.com/channel/UCFacVjadYSnEjtSHafNRC4g" target="_blank">
+          <a href="https://www.youtube.com/channel/UCFacVjadYSnEjtSHafNRC4g" rel="noopener" target="_blank">
             <img src="../assets/youtube.svg" width="30" alt="YouTube">
           </a>
         </div>
@@ -32,7 +32,7 @@
 import { Component, Vue } from '@smyld/vue-property-decorator';
 import TopTracks from './Home/TopTracks.vue';
 import TopArtists from './Home/TopArtists.vue';
-import TopGenres from './Home/TopGenres.vue';
+import TopGenres from './Home/TopTags.vue';
 
 @Component({
   components: {
@@ -60,7 +60,7 @@ export default class Home extends Vue {}
     height: 120px;
     display: flex;
     flex-direction: column;
-    justify-content: center;;
+    justify-content: center;
     gap: 20px;
 
     .row {
@@ -73,7 +73,7 @@ export default class Home extends Vue {}
     .icons {
       display: flex;
       flex-direction: row;
-      align-items: center;;
+      align-items: center;
       gap: 10px;
     }
   }

@@ -108,7 +108,6 @@ nav {
       border: 1px solid #302F2F;
       padding: 13px;
       color: #BDBDBD;
-      font-family: 'Source Sans Pro';
       font-style: normal;
       font-weight: 700;
       font-size: 20px;

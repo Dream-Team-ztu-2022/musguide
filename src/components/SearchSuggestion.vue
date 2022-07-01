@@ -63,7 +63,6 @@ export default class SearchSuggestion extends Vue {
     flex-direction: column;
     gap: 8px;
 
-    font-family: 'Source Sans Pro';
     font-style: normal;
     font-weight: 700;
     font-size: 20px;
