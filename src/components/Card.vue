@@ -31,9 +31,9 @@ const LENGTH_TO_CUT = 40;
 @Component({
 })
 export default class Card extends Vue {
-  @Prop() title!: string;
+  @Prop({ default: `` }) title!: string;
 
-  @Prop() subtitle!: string;
+  @Prop({ default: `` }) subtitle!: string;
 
   @Prop() preview!: string;
 
