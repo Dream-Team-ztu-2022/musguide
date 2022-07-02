@@ -33,9 +33,11 @@ export interface ITopTracks {
 }
 
 export class KerveApi {
-  static get = () => Api.get(`https://kerve.last.fm/kerve/charts?type=artist&tracks=1&nr=30&format=json`);
+  static get = <T = unknown>(method: string) => Api.get<T>(`https://kerve.last.fm/kerve/${method}`);
 
-  static getTopArtists = () => Api.get<ITopArtists>(`https://kerve.last.fm/kerve/charts?type=artist&nr=100&format=json`);
+  static getTopArtists = () => KerveApi.get<ITopArtists>(`charts?type=artist&nr=100&format=json`);
 
-  static getTopTracks = () => Api.get<ITopTracks>(`https://kerve.last.fm/kerve/charts?type=track&nr=100&format=json`);
+  static getTopTracks = () => KerveApi.get<ITopTracks>(`charts?type=track&nr=100&format=json`);
+
+  static getSimilarArtists = (artistId: string) => KerveApi.get<unknown>(`similarartists?artist=${artistId}&autocorrect=1&tracks=0&image_size=large&limit=30&format=json`)
 }
