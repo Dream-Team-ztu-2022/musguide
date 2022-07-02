@@ -47,6 +47,7 @@ export default class SearchSuggestion extends Vue {
 
   &.clickable {
     cursor: pointer;
+    margin: 5px 0;
 
     &:hover {
       background-color: lighten(#121212, 20%);

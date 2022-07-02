@@ -22,7 +22,7 @@ import Genres from '../components/Genres.vue';
   },
 })
 export default class Artist extends Vue {
-  @Prop() mbid!: string;
+  @Prop() artistId!: string;
 }
 </script>
 
