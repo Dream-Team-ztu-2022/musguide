@@ -57,7 +57,7 @@ export default class NavBar extends Vue {
         if (!artist.mbid) return;
 
         suggestions.push({
-          image: artist.image[0][`#text`] || DEFAULT_AVATAR,
+          image: ``,
           title: artist.name,
           subtitle: `Виконавець`,
           route: `/artist/${artist.mbid}`,
@@ -68,7 +68,7 @@ export default class NavBar extends Vue {
         if (!track.mbid) return;
 
         suggestions.push({
-          image: track.image[0][`#text`] || DEFAULT_AVATAR,
+          image: ``,
           title: track.name,
           subtitle: `Трек - ${track.artist}`,
           route: `/track/${track.mbid}`,
