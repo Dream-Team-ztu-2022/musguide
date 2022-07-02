@@ -24,7 +24,9 @@ import Genres from '../components/Genres.vue';
   },
 })
 export default class SongDetails extends Vue {
-  @Prop() mbid!: string;
+  @Prop() artistId!: string;
+
+  @Prop() trackId!: string;
 }
 </script>
 
