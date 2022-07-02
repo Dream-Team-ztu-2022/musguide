@@ -55,11 +55,13 @@ export default class NavBar extends Vue {
       artists.results.artistmatches.artist.forEach((artist) => {
         if (!artist.mbid) return;
 
+        const [artistId] = artist.url.split(`/`);
+
         suggestions.push({
           image: ``,
           title: artist.name,
           subtitle: `Виконавець`,
-          route: `/artist/${artist.url.split(`/`).pop()}`,
+          route: `/artist/${artistId}`,
         });
       });
 

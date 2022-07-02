@@ -62,6 +62,3 @@ export default class TopTags extends Vue {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-</style>
