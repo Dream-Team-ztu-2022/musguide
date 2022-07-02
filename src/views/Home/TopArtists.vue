@@ -7,12 +7,13 @@
     :getTitle="getTitle"
     :getSubtitle="getSubtitle"
     :getImage="getImage"
+    :getRoute="getRoute"
   />
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "@smyld/vue-property-decorator";
-import { IArtist, ScrobblerApi } from "@/api/ScrobblerApi";
+import { IArtist, KerveApi } from "@/api/KerveApi";
 import CardList from "@/components/CardList.vue";
 import Card from "@/components/Card.vue";
 import AbstractTopCardList from "./AbstractTopCardList.vue";
@@ -34,13 +35,13 @@ export default class TopArtists extends Vue {
   }
 
   async fetch() {
-    const topArtists = await ScrobblerApi.getTopArtists();
+    const topArtists = await KerveApi.getTopArtists();
 
-    this.items = topArtists.artists.artist;
+    this.items = topArtists.results.artist;
   }
 
   getKey(artist: IArtist) {
-    return artist.mbid || artist.name;
+    return artist.name;
   }
 
   getTitle(artist: IArtist) {
@@ -52,9 +53,12 @@ export default class TopArtists extends Vue {
   }
 
   getImage(artist: IArtist) {
-    return (
-      artist.image.find((image) => image.size === `medium`)?.[`#text`] || `#`
-    );
+    return artist.image;
+  }
+
+  getRoute(artist: IArtist) {
+    const idName = artist.url.split(`/`).pop();
+    return `/artist/${idName}`;
   }
 }
 </script>

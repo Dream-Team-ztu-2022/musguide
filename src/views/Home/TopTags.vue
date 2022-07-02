@@ -7,6 +7,7 @@
     :getTitle="getTitle"
     :getSubtitle="getSubtitle"
     :getImage="getImage"
+    :getRoute="getRoute"
   />
 </template>
 
@@ -20,13 +21,14 @@ import AbstractTopCardList from "./AbstractTopCardList.vue";
 @Component({
   components: { CardList, Card, AbstractTopCardList },
 })
-export default class TopGenres extends Vue {
+export default class TopTags extends Vue {
   items: ITag[] = [];
 
   listName = `Топ жанрів`;
 
   cardListProps = {
     round: false,
+    small: true,
   };
 
   mounted() {
@@ -51,11 +53,12 @@ export default class TopGenres extends Vue {
     return `${(Number(tag.taggings) / 1000).toFixed(1)}k композицій`;
   }
 
-  getImage(tag: ITag) {
-    return `#`; // We don't have any tag titles :(
+  getImage() {
+    return false;
+  }
+
+  getRoute() {
+    return false;
   }
 }
 </script>
-
-<style lang="scss" scoped>
-</style>

@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from '@smyld/vue-property-decorator';
+import { Component, Prop, Vue } from '@smyld/vue-property-decorator';
 import ArtistHeader from './Artist/Header.vue';
 import Songs from './Artist/Songs.vue';
 import Genres from '../components/Genres.vue';
@@ -21,13 +21,14 @@ import Genres from '../components/Genres.vue';
     Songs,
   },
 })
-export default class Artist extends Vue {}
+export default class Artist extends Vue {
+  @Prop() artistId!: string;
+}
 </script>
 
 <style lang="scss" scoped>
 .artist {
   display: flex;
   flex-direction: column;
-  margin-top: -136.5px;
 }
 </style>

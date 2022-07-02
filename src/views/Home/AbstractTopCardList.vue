@@ -6,7 +6,8 @@
         v-bind="cardListProps"
         :title="getTitle(item)"
         :subtitle="getSubtitle(item)"
-        :preview="getImage(item)" />
+        :preview="getImage(item)"
+        :route="getRoute(item)" />
     </card-list>
   </section>
 </template>
@@ -37,5 +38,8 @@ export default class AbstractTopCardList extends Vue {
 
   @Prop({ default: () => `#` })
   getImage!: (item: unknown) => string;
+
+  @Prop({ default: () => `#` })
+  getRoute!: (item: unknown) => string;
 }
 </script>

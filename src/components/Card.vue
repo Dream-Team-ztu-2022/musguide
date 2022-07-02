@@ -1,18 +1,19 @@
 <template>
-  <article :class="{ 'horizontal-list-item': true, round }">
+  <article class="horizontal-list-item" :class="{ round, long, small, clickable: !!route }"
+    :title="tooltip" @click="onClick">
     <header>
       <slot name="preview">
-        <figure class="preview" :style="{ '--url': `url(${preview})` }" />
+        <figure v-if="!small" class="preview" :style="{ '--url': `url(${preview})` }" />
       </slot>
 
       <slot name="button">
-        <img src="../assets/play.svg" alt="play" class="play" />
+        <img src="../assets/play.svg" width="48" alt="play" class="play" />
       </slot>
     </header>
 
     <main>
       <slot name="title">
-        <strong v-if="title" class="title">{{title}}</strong>
+        <strong v-if="title" class="title">{{displayableTitle}}</strong>
       </slot>
       <slot name="subtitle">
         <span v-if="subtitle" class="subtitle">{{subtitle}}</span>
@@ -24,44 +25,89 @@
 <script lang="ts">
 import { Component, Prop, Vue } from '@smyld/vue-property-decorator';
 
+const LENGTH_TO_SMALL = 14;
+const LENGTH_TO_CUT = 40;
+
 @Component({
 })
 export default class Card extends Vue {
-  @Prop() title!: string;
+  @Prop({ default: `` }) title!: string;
 
-  @Prop() subtitle!: string;
+  @Prop({ default: `` }) subtitle!: string;
 
   @Prop() preview!: string;
 
   @Prop({ default: false }) round!: boolean;
+
+  @Prop({ default: false }) small!: boolean;
+
+  @Prop() route!: string;
+
+  onClick() {
+    if (!this.route) return;
+
+    this.$router.push(this.route);
+  }
+
+  get displayableTitle() {
+    if (this.title.length < LENGTH_TO_CUT) return this.title;
+
+    return `${this.title.slice(0, LENGTH_TO_CUT - 2)}…`;
+  }
+
+  get tooltip() {
+    return `${this.subtitle} — ${this.title}`;
+  }
+
+  get long() {
+    return this.title.length > LENGTH_TO_SMALL;
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 article {
   position: relative;
-  width: 270px;
-  height: 370px;
+  width: 190px;
+  height: 256px;
   background-color: #282828;
   border-radius: 15px;
   display: flex;
   flex-direction: column;
-  cursor: pointer;
-  padding: 20px;
-  margin: 0 25px;
+  padding: 16px;
 
   transition: background-color 0.1s;
 
-  &:hover {
-    background-color: #3C3C3C;
+  &.clickable {
+    cursor: pointer;
+    &:hover {
+      background-color: #3C3C3C;
+
+      .play {
+        opacity: 1;
+      }
+    }
+  }
+
+  &.small {
+    min-width: 190px;
+    height: 75px;
 
     .play {
-      opacity: 1;
+      display: none;
+    }
+
+    .title {
+      margin-top: 0;
     }
   }
 
   &.round .preview {
     border-radius: 50%;
+  }
+
+  &.long .title {
+    font-size: 16px;
   }
 
   header {
@@ -71,18 +117,19 @@ article {
 
     .preview {
       margin: 0;
-      width: 230px;
-      height: 230px;
+      width: 150px;
+      height: 150px;
       background-image: var(--url);
       background-position: center;
       background-size: cover;
+      border-radius: 10px;
     }
 
     .play {
       opacity: 0;
       position: absolute;
-      right: 30px;
-      top: 170px;
+      right: 26px;
+      top: 112px;
       transition: opacity 0.1s;
     }
   }
@@ -90,22 +137,29 @@ article {
   main {
     display: flex;
     flex-direction: column;
-    margin-top: 20px;
-    gap: 20px;
+    margin-top: 10px;
+    gap: 15px;
 
     .title {
       font-style: normal;
       font-weight: 900;
-      font-size: 24px;
-      line-height: 30px;
+      font-size: 20px;
+      line-height: 20px;
+      height: 0;
+      display: flex;
+      align-items: center;
+      margin-top: 20px;
     }
 
     .subtitle {
       font-style: normal;
       font-weight: 700;
-      font-size: 20px;
-      line-height: 22px;
+      font-size: 16px;
+      line-height: 18px;
       color: #BDBDBD;
+      position: absolute;
+      left: 17px;
+      bottom: 13px;
     }
   }
 }

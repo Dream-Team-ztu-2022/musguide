@@ -5,19 +5,24 @@ import SongDetails from '../views/SongDetails.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: `/artist`,
+    path: `/artist/:artistId`,
     name: `Artist`,
     component: Artist,
+    props: true,
   },
   {
-    path: `/song`,
-    name: `Song`,
+    path: `/track/:artistId/:trackId`,
+    name: `Track`,
     component: SongDetails,
+    props: true,
   },
   {
     path: `/`,
     name: `Home`,
     component: Home,
+    meta: {
+      keepAlive: true
+    }
   },
 ];
 

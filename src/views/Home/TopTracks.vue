@@ -7,12 +7,13 @@
     :getTitle="getTitle"
     :getSubtitle="getSubtitle"
     :getImage="getImage"
+    :getRoute="getRoute"
   />
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "@smyld/vue-property-decorator";
-import { ITrack, ScrobblerApi } from "@/api/ScrobblerApi";
+import { ITrack, KerveApi } from "@/api/KerveApi";
 import CardList from "@/components/CardList.vue";
 import Card from "@/components/Card.vue";
 import AbstractTopCardList from "./AbstractTopCardList.vue";
@@ -26,7 +27,7 @@ export default class TopTracks extends Vue {
   listName = `Топ треків`;
 
   cardListProps = {
-    round: true,
+    round: false,
   };
 
   mounted() {
@@ -34,13 +35,13 @@ export default class TopTracks extends Vue {
   }
 
   async fetch() {
-    const topArtists = await ScrobblerApi.getTopTracks();
+    const topArtists = await KerveApi.getTopTracks();
 
-    this.items = topArtists.tracks.track;
+    this.items = topArtists.results.track;
   }
 
   getKey(track: ITrack) {
-    return track.mbid || track.name;
+    return track.url;
   }
 
   getTitle(track: ITrack) {
@@ -48,13 +49,16 @@ export default class TopTracks extends Vue {
   }
 
   getSubtitle(track: ITrack) {
-    return track.artist.name;
+    return track.artist;
   }
 
   getImage(track: ITrack) {
-    return (
-      track.image.find((image) => image.size === `medium`)?.[`#text`] || `#`
-    );
+    return track.image;
+  }
+
+  getRoute(track: ITrack) {
+    const [artistId, , trackId] = track.url.split(`/`).slice(-3);
+    return `/track/${artistId}/${trackId}`;
   }
 }
 </script>
