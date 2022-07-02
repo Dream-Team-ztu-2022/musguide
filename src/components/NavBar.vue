@@ -20,7 +20,6 @@
 
 <script lang="ts">
 import { ScrobblerApi } from '@/api/ScrobblerApi';
-import { DEFAULT_AVATAR } from '@/constants';
 import { Component, Vue } from '@smyld/vue-property-decorator';
 import SearchSuggestion from './SearchSuggestion.vue';
 
@@ -60,18 +59,20 @@ export default class NavBar extends Vue {
           image: ``,
           title: artist.name,
           subtitle: `Виконавець`,
-          route: `/artist/${artist.mbid}`,
+          route: `/artist/${artist.url.split(`/`).pop()}`,
         });
       });
 
       tracks.results.trackmatches.track.forEach((track) => {
         if (!track.mbid) return;
 
+        const [artistId, , trackId] = track.url.split(`/`).slice(-3);
+
         suggestions.push({
           image: ``,
           title: track.name,
           subtitle: `Трек - ${track.artist}`,
-          route: `/track/${track.mbid}`,
+          route: `/track/${artistId}/${trackId}`,
         });
       });
 
