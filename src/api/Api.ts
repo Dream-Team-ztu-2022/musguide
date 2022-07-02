@@ -1,5 +1,4 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import { API_URL } from '../constants';
 
 const request = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
@@ -23,13 +22,7 @@ request.interceptors.response.use(
 
 export type ApiObject = Record<string, unknown>;
 
-const apiKey = process.env.VUE_APP_API_KEY;
-
 export class Api {
-  static getScrobbler = <T = unknown>(method: string, options?: AxiosRequestConfig) => (
-    request.get<unknown, T>(`${API_URL}/?method=${method}&api_key=${apiKey}&format=json`, options)
-  );
-
   static get = <T = unknown>(url: string, options?: AxiosRequestConfig) => (
     request.get<unknown, T>(url, options)
   );

@@ -92,14 +92,19 @@ export interface ITrackSearch {
   }
 }
 
+const apiKey = process.env.VUE_APP_API_KEY;
 export class ScrobblerApi {
-  static getTopArtists = () => Api.getScrobbler<ITopArtists>('chart.gettopartists&limit=100');
+  static get = <T = unknown>(method: string) => (
+    Api.get<T>(`https://ws.audioscrobbler.com/2.0/?method=${method}&api_key=${apiKey}&format=json`)
+  );
 
-  static getTopTracks = () => Api.getScrobbler<ITopTracks>('chart.getTopTracks&limit=100');
+  static getTopArtists = () => ScrobblerApi.get<ITopArtists>('chart.gettopartists&limit=100');
 
-  static getTopTags = () => Api.getScrobbler<ITopTags>('chart.gettoptags&limit=100');
+  static getTopTracks = () => ScrobblerApi.get<ITopTracks>('chart.getTopTracks&limit=100');
 
-  static searchArtist = (name: string) => Api.getScrobbler<IArtistSearch>(`artist.search&artist=${name}`);
+  static getTopTags = () => ScrobblerApi.get<ITopTags>('chart.gettoptags&limit=100');
 
-  static searchTrack = (name: string) => Api.getScrobbler<ITrackSearch>(`track.search&track=${name}`);
+  static searchArtist = (name: string) => ScrobblerApi.get<IArtistSearch>(`artist.search&artist=${name}`);
+
+  static searchTrack = (name: string) => ScrobblerApi.get<ITrackSearch>(`track.search&track=${name}`);
 }
