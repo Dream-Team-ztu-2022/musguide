@@ -4,7 +4,11 @@
       <h2 class="subtitle">{{artistName}}</h2>
       <h1 class="title">{{name}}</h1>
 
-      <header-controlls :listeners="getListeners(listeners)" :playcount="getListeners(playcount)" />
+      <header-controlls
+        :listeners="getListeners(listeners)"
+        :playcount="getListeners(playcount)"
+        :url="trackUrl"
+      />
 
       <div class="footer">
         <p class="description" v-html="description"></p>
@@ -17,10 +21,10 @@
       </div>
     </div>
 
-    <img :src="img" class="img" v-if="img">
-    <img :src="img" class="song-img" v-if="img">
-    <img src="../../assets/no-img.svg" v-if="!img" class="img">
-    <img src="../../assets/no-img.svg" v-if="!img" class="song-img">
+    <img v-if="img" :src="img" class="img">
+    <img v-else :src="img" class="song-img">
+    <img v-if="!img" src="../../assets/no-img.svg" class="img">
+    <img v-else src="../../assets/no-img.svg" class="song-img">
   </section>
 </template>
 
@@ -50,6 +54,8 @@ export default class Header extends Vue {
   @Prop() listeners!: string;
 
   @Prop() playcount!: string;
+
+  @Prop() trackUrl!: string;
 }
 </script>
 

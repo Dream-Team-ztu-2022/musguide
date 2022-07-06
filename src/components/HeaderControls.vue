@@ -6,15 +6,15 @@
     </a>
 
     <div class="dropdown-container">
-      <button class="button" v-on:click="handleDropdownOpen">
+      <button class="button" @click="handleDropdownOpen">
         <img src="../assets/menu.svg" alt="menu" />
       </button>
 
       <div class="dropdown-content" v-if="isDropdownOpen">
-        <div class="dropdown-content-item">
+        <div class="dropdown-content-item" @click="handleOpenYoutube" >
           Listen on youtube
         </div>
-        <div class="dropdown-content-item">
+        <div class="dropdown-content-item" @click="handleOpenSpotify">
           Listen on spotify
         </div>
       </div>
@@ -51,6 +51,16 @@ export default class HeaderControls extends Vue {
   @Prop() url!: string;
 
   isDropdownOpen = false;
+
+  handleOpenYoutube() {
+    const id = `${this.$route.params.trackId || ""} ${this.$route.params.artistId}`.trim();
+    window.open(`https://www.youtube.com/results?search_query=${id}`);
+  }
+
+  handleOpenSpotify() {
+    const id = `${this.$route.params.trackId || ""} ${this.$route.params.artistId}`.trim();
+    window.open(`https://open.spotify.com/search/${id}`);
+  }
 
   handleDropdownOpen() {
     this.isDropdownOpen = true;

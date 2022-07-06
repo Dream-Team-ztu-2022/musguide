@@ -15,7 +15,7 @@
       />
     </div>
 
-    <p class="show-more" v-on:click="handleShowMore">
+    <p class="show-more" @click="handleShowMore">
       {{songsCount === 5 ? 'Показати все': 'Показати менше'}}
     </p>
   </section>

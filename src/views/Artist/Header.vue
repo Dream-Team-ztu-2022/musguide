@@ -12,8 +12,8 @@
       <p class="description" v-if="description" v-html="description" />
     </div>
 
-    <img :src="img" class="img" v-if="img">
-    <img src="../../assets/no-img.svg" class="img" v-if="!img">
+    <img v-if="img" :src="img" class="img">
+    <img v-else src="../../assets/no-img.svg" class="img">
   </section>
 </template>
 

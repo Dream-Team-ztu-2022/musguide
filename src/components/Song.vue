@@ -1,5 +1,5 @@
 <template>
-  <div class="song" v-on:click="onClick">
+  <div class="song" @click="onClick">
     <div class="song-block">
       <div class="index">{{index}}</div>
       <img :src="img" alt="song-img" class="img" v-if="img"/>

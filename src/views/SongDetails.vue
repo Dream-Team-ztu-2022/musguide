@@ -9,6 +9,7 @@
       :img="img"
       :listeners="listeners"
       :playcount="playcount"
+      :trackUrl="trackUrl"
     />
 
     <div class="genres">
@@ -62,6 +63,8 @@ export default class SongDetails extends Vue {
 
   playcount = "";
 
+  trackUrl = "";
+
   tags = [];
 
   mounted() {
@@ -73,13 +76,14 @@ export default class SongDetails extends Vue {
 
     this.artistName = track.artist.name;
     this.name = track.name;
-    this.description = track.wiki.content;
+    this.description = track.wiki?.content;
     this.duration = getTime(track.duration);
-    this.published = track.wiki.published;
+    this.published = track.wiki?.published;
     this.img = track.album?.image?.[3]?.["#text"];
     this.listeners = track.listeners;
     this.playcount = track.playcount;
     this.tags = track.toptags.tag.map((tag: any) => tag.name);
+    this.trackUrl = track.url;
   }
 }
 </script>
