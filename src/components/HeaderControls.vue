@@ -1,20 +1,31 @@
 <template>
   <section class="header-controlls">
-    <button class="button btn-play">
+    <a class="button btn-play" :href="url" target="_blank">
       <img src="../assets/btn-play.svg" alt="play" class="play" />
       Слухати
-    </button>
+    </a>
 
-    <button class="button">
-      <img src="../assets/menu.svg" alt="menu" />
-    </button>
+    <div class="dropdown-container">
+      <button class="button" v-on:click="handleDropdownOpen">
+        <img src="../assets/menu.svg" alt="menu" />
+      </button>
+
+      <div class="dropdown-content" v-if="isDropdownOpen">
+        <div class="dropdown-content-item">
+          Listen on youtube
+        </div>
+        <div class="dropdown-content-item">
+          Listen on spotify
+        </div>
+      </div>
+    </div>
 
     <div class="text">
       <div class="title">
         Слухають
       </div>
       <div class="subtitle">
-        {{listening}}
+        {{listeners}}
       </div>
     </div>
 
@@ -23,23 +34,61 @@
         Прослухано
       </div>
       <div class="subtitle">
-        {{listen}}
+        {{playcount}}
       </div>
     </div>
   </section>
 </template>
 
 <script lang="ts">
-import { Prop, Vue } from '@smyld/vue-property-decorator';
+import { Prop, Vue } from "@smyld/vue-property-decorator";
 
 export default class HeaderControls extends Vue {
-  @Prop() listening!: string;
+  @Prop() listeners!: string;
 
-  @Prop() listen!: string;
+  @Prop() playcount!: string;
+
+  @Prop() url!: string;
+
+  isDropdownOpen = false;
+
+  handleDropdownOpen() {
+    this.isDropdownOpen = true;
+  }
+
+  handleDropdownClose() {
+    this.isDropdownOpen = false;
+  }
 }
 </script>
 
 <style lang="scss" scoped>
+.dropdown-container {
+  position: relative;
+}
+
+.dropdown-content {
+  width: 151px;
+  background-color: #fff;
+  padding: 15px 10px;
+  position: absolute;
+  bottom: -83px;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+}
+
+.dropdown-content-item {
+  color: #121212;
+  padding: 10px 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  &:hover {
+    background-color: #aea8a8;
+  }
+}
+
 .header-controlls {
   margin: 32px 0;
   display: flex;
@@ -60,10 +109,14 @@ export default class HeaderControls extends Vue {
   color: #10171E;
   display: flex;
   align-items: center;
+  height: 60px;
+  cursor: pointer;
 }
 
 .btn-play {
   padding: 12px 55px 12px 35px;
+  background-color: #6b6b6b;
+  text-decoration: none;
 }
 
 .text {

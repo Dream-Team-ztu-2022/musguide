@@ -2,17 +2,18 @@
   <div class="artist">
     <artist-header />
 
-    <genres />
+    <genres :genres="genres" />
 
     <songs />
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from '@smyld/vue-property-decorator';
-import ArtistHeader from './Artist/Header.vue';
-import Songs from './Artist/Songs.vue';
-import Genres from '../components/Genres.vue';
+import { Component, Vue } from "@smyld/vue-property-decorator";
+import { ScrobblerApi } from "@/api/ScrobblerApi";
+import ArtistHeader from "./Artist/Header.vue";
+import Songs from "./Artist/Songs.vue";
+import Genres from "../components/Genres.vue";
 
 @Component({
   components: {
@@ -22,7 +23,17 @@ import Genres from '../components/Genres.vue';
   },
 })
 export default class Artist extends Vue {
-  @Prop() artistId!: string;
+  genres: string[] = [];
+
+  mounted() {
+    this.fetch();
+  }
+
+  async fetch() {
+    const { toptags } = await ScrobblerApi.getArtistTags(this.$route.params.artistId as string);
+
+    this.genres = toptags.tag.slice(0, 5).map((tag: any) => tag.name);
+  }
 }
 </script>
 

@@ -7,12 +7,12 @@ export interface IAttributes {
   total: number;
 }
 
-export type TImageSize = 'small' | 'medium' | 'large' | 'extralarge' | 'mega';
+export type TImageSize = "small" | "medium" | "large" | "extralarge" | "mega";
 
 export type TStreamable = 0 | 1;
 
 export interface IImage {
-  '#text': string; // url
+  "#text": string; // url
   size: TImageSize;
 }
 
@@ -32,7 +32,7 @@ export interface IArtist extends IArtistShort {
 export interface ITopArtists {
   artists: {
     artist: IArtist[];
-    '@attr': IAttributes;
+    "@attr": IAttributes;
   }
 }
 
@@ -44,7 +44,7 @@ export interface ITrack {
   mbid: string;
   url: string;
   streamable: {
-    '#text': TStreamable;
+    "#text": TStreamable;
     fulltrack: TStreamable;
   };
   artist: IArtistShort;
@@ -54,7 +54,7 @@ export interface ITrack {
 export interface ITopTracks {
   tracks: {
     track: ITrack[];
-    '@attr': IAttributes;
+    "@attr": IAttributes;
   }
 }
 
@@ -70,7 +70,7 @@ export interface ITag {
 export interface ITopTags {
   tags: {
     tag: ITag[];
-    '@attr': IAttributes;
+    "@attr": IAttributes;
   }
 }
 
@@ -98,13 +98,21 @@ export class ScrobblerApi {
     Api.get<T>(`https://ws.audioscrobbler.com/2.0/?method=${method}&api_key=${apiKey}&format=json`)
   );
 
-  static getTopArtists = () => ScrobblerApi.get<ITopArtists>('chart.gettopartists&limit=100');
+  static getTopArtists = () => ScrobblerApi.get<ITopArtists>("chart.gettopartists&limit=100");
 
-  static getTopTracks = () => ScrobblerApi.get<ITopTracks>('chart.getTopTracks&limit=100');
+  static getTopTracks = () => ScrobblerApi.get<ITopTracks>("chart.getTopTracks&limit=100");
 
-  static getTopTags = () => ScrobblerApi.get<ITopTags>('chart.gettoptags&limit=100');
+  static getTopTags = () => ScrobblerApi.get<ITopTags>("chart.gettoptags&limit=100");
 
   static searchArtist = (name: string) => ScrobblerApi.get<IArtistSearch>(`artist.search&artist=${name}`);
 
   static searchTrack = (name: string) => ScrobblerApi.get<ITrackSearch>(`track.search&track=${name}`);
+
+  static getArtist = (name: string) => ScrobblerApi.get<any>(`artist.getinfo&artist=${name}`);
+
+  static getArtistTags = (name: string) => ScrobblerApi.get<any>(`artist.gettoptags&artist=${name}`);
+
+  static getArtistTopTracks = (name: string) => ScrobblerApi.get<any>(`artist.gettoptracks&artist=${name}`)
+
+  static getTrackInfo = (name: string, track: string) => ScrobblerApi.get<any>(`track.getInfo&artist=${name}&track=${track}`)
 }
