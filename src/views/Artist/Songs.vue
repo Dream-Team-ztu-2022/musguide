@@ -24,7 +24,7 @@
 <script lang="ts">
 import { Component, Vue } from "@smyld/vue-property-decorator";
 import { ScrobblerApi } from "@/api/ScrobblerApi";
-import { getListeners } from "@/utils";
+import { decorateNumberOfListeners } from "@/utils";
 import Song from "@/components/Song.vue";
 
 @Component({
@@ -35,10 +35,10 @@ export default class Songs extends Vue {
 
   fullSongList = false;
 
-  getListeners = getListeners;
+  getListeners = decorateNumberOfListeners;
 
   onClick(track: string) {
-    this.$router.push(`/track/${this.$route?.params?.artistId as string}/${track}`);
+    this.$router.push(`/track/${this.artistId}/${track}`);
   }
 
   mounted() {
@@ -46,10 +46,12 @@ export default class Songs extends Vue {
   }
 
   async fetch() {
-    const { toptracks } = await ScrobblerApi.getArtistTopTracks(
-      this.$route?.params?.artistId as string,
-    );
+    const { toptracks } = await ScrobblerApi.getArtistTopTracks(this.artistId);
     this.songs = toptracks.track;
+  }
+
+  get artistId() {
+    return this.$route.params.artistId as string;
   }
 
   get songList() {

@@ -1,6 +1,6 @@
 export const delay = (timeMs: number) => new Promise((res) => setTimeout(res, timeMs));
 
-export const getListeners = (data: string) => {
+export const decorateNumberOfListeners = (data: string) => {
   if (!data) return "";
   if (data.length > 6) return `${data.slice(0, -6)} млн.`;
   if (data.length > 3) return `${data.slice(0, -3)} тис.`;

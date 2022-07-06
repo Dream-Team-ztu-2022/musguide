@@ -33,14 +33,14 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "@smyld/vue-property-decorator";
-import { getListeners } from "@/utils";
+import { decorateNumberOfListeners } from "@/utils";
 import HeaderControls from "@/components/HeaderControls.vue";
 
 @Component({
   components: { HeaderControls },
 })
 export default class Header extends Vue {
-  getListeners = getListeners
+  getListeners = decorateNumberOfListeners;
 
   @Prop() name!: string;
 

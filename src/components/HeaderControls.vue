@@ -51,13 +51,21 @@ export default class HeaderControls extends Vue {
   @Prop() url!: string;
 
   handleOpenYoutube() {
-    const id = `${this.$route.params.trackId || ``} ${this.$route.params.artistId}`.trim();
+    const id = `${this.trackId} ${this.artistId}`.trim();
     window.open(`https://www.youtube.com/results?search_query=${id}`);
   }
 
   handleOpenSpotify() {
-    const id = `${this.$route.params.trackId || ``} ${this.$route.params.artistId}`.trim();
+    const id = `${this.trackId} ${this.artistId}`.trim();
     window.open(`https://open.spotify.com/search/${id}`);
+  }
+
+  get trackId() {
+    return this.$route.params.trackId || ``;
+  }
+
+  get artistId() {
+    return this.$route.params.artistId || ``;
   }
 }
 </script>

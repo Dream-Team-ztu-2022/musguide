@@ -16,14 +16,14 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "@smyld/vue-property-decorator";
-import { getListeners } from "@/utils";
+import { decorateNumberOfListeners } from "@/utils";
 import Song from "@/components/Song.vue";
 
 @Component({
   components: { Song },
 })
 export default class Songs extends Vue {
-  getListeners = getListeners;
+  getListeners = decorateNumberOfListeners;
 
   @Prop() songImg!: string;
 

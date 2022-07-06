@@ -21,7 +21,7 @@
 import { Component, Vue } from "@smyld/vue-property-decorator";
 import { ScrobblerApi } from "@/api/ScrobblerApi";
 import { MusicBrainzApi } from "@/api/MusicBrainzApi";
-import { getListeners } from "@/utils";
+import { decorateNumberOfListeners } from "@/utils";
 import HeaderControls from "@/components/HeaderControls.vue";
 
 @Component({
@@ -40,7 +40,7 @@ export default class Header extends Vue {
 
   img = ``;
 
-  getListeners = getListeners;
+  getListeners = decorateNumberOfListeners;
 
   mounted() {
     this.fetch();

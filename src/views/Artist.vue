@@ -30,9 +30,13 @@ export default class Artist extends Vue {
   }
 
   async fetch() {
-    const { toptags } = await ScrobblerApi.getArtistTags(this.$route.params.artistId as string);
+    const { toptags } = await ScrobblerApi.getArtistTags(this.artistId);
 
     this.genres = toptags.tag.slice(0, 5).map((tag: any) => tag.name);
+  }
+
+  get artistId() {
+    return this.$route.params.artistId as string;
   }
 }
 </script>
