@@ -1,33 +1,73 @@
 <template>
   <section class="header">
     <div class="info">
-      <h1 class="title">Антитіла</h1>
+      <h1 class="title">{{name}}</h1>
 
-      <header-controlls listen="5 млн." listening="500 тис." />
+      <header-controls
+        :listeners="getListeners(listeners)"
+        :playcount="getListeners(playcount)"
+        :url="artistUrl"
+      />
 
-      <p class="description">
-        «Антитела» — український поп-рок-гурт із Києва, що виник у 2008 році.
-         Фронтменом музичного колективу є Тарас Тополя.
-         У репертуарі гурту є пісні...
-      </p>
-
-      <p class="details">
-        Докладніше
-      </p>
+      <p class="description" v-if="description" v-html="description" />
     </div>
 
-    <img src="https://24tv.ua/resources/photos/news/3952x3034_DIR/202111/1792915_15356127.jpg?202111085916" class="img">
+    <img v-if="img" :src="img" class="img" alt="Cover image">
+    <img v-else src="../../assets/no-img.svg" class="img" alt="No cover image">
   </section>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from '@smyld/vue-property-decorator';
-import HeaderControlls from '@/components/HeaderControls.vue';
+import { Component, Vue } from "@smyld/vue-property-decorator";
+import { ScrobblerApi } from "@/api/ScrobblerApi";
+import { MusicBrainzApi } from "@/api/MusicBrainzApi";
+import { decorateNumberOfListeners } from "@/utils";
+import HeaderControls from "@/components/HeaderControls.vue";
 
 @Component({
-  components: { HeaderControlls },
+  components: { HeaderControls },
 })
-export default class Header extends Vue {}
+export default class Header extends Vue {
+  name = ``;
+
+  listeners = ``;
+
+  playcount = ``;
+
+  description = ``;
+
+  artistUrl = ``;
+
+  img = ``;
+
+  getListeners = decorateNumberOfListeners;
+
+  mounted() {
+    this.fetch();
+  }
+
+  async fetch() {
+    const { artist } = await ScrobblerApi.getArtist(this.$route.params.artistId as string);
+    let imageUrl = ``;
+    try {
+      const data = await MusicBrainzApi.getArtist(artist.mbid);
+      imageUrl = data?.relations.find((x: any) => x.type === `image`).url.resource;
+      if (imageUrl.startsWith(`https://commons.wikimedia.org/wiki/File:`)) {
+        const filename = imageUrl.substring(imageUrl.lastIndexOf(`/`) + 1);
+        imageUrl = `https://commons.wikimedia.org/wiki/Special:Redirect/file/${filename}`;
+      }
+    } catch (e) {
+      // console.log(e)
+    }
+
+    this.name = artist.name;
+    this.listeners = artist.stats.listeners;
+    this.playcount = artist.stats.playcount;
+    this.description = artist.bio.content;
+    this.artistUrl = artist.url;
+    this.img = imageUrl;
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -42,6 +82,8 @@ export default class Header extends Vue {}
   font-size: 24px;
   margin-bottom: 24px;
   max-width: 628px;
+  height: 200px;
+  overflow: auto;
   white-space: break-spaces;
 }
 
@@ -50,6 +92,7 @@ export default class Header extends Vue {}
   font-size: 24px;
   color: #A5AAAF;
   text-transform: uppercase;
+  cursor: pointer;
 }
 
 .info {

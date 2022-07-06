@@ -1,45 +1,114 @@
 <template>
   <section class="header-controlls">
-    <button class="button btn-play">
+    <a class="button btn-play" :href="url" target="_blank">
       <img src="../assets/btn-play.svg" alt="play" class="play" />
       Слухати
-    </button>
+    </a>
 
-    <button class="button">
-      <img src="../assets/menu.svg" alt="menu" />
-    </button>
+    <div class="dropdown-container">
+      <button class="button">
+        <img src="../assets/menu.svg" alt="menu" />
+      </button>
 
-    <div class="text">
+      <div class="dropdown-content">
+        <div class="dropdown-content-item" @click="handleOpenYoutube">
+          Listen on youtube
+        </div>
+        <div class="dropdown-content-item" @click="handleOpenSpotify">
+          Listen on spotify
+        </div>
+      </div>
+    </div>
+
+    <div class="text" v-if="listeners">
       <div class="title">
         Слухають
       </div>
       <div class="subtitle">
-        {{listening}}
+        {{listeners}}
       </div>
     </div>
 
-    <div class="text">
+    <div class="text" v-if="playcount">
       <div class="title">
         Прослухано
       </div>
       <div class="subtitle">
-        {{listen}}
+        {{playcount}}
       </div>
     </div>
   </section>
 </template>
 
 <script lang="ts">
-import { Prop, Vue } from '@smyld/vue-property-decorator';
+import { Prop, Vue } from "@smyld/vue-property-decorator";
 
 export default class HeaderControls extends Vue {
-  @Prop() listening!: string;
+  @Prop() listeners!: string;
 
-  @Prop() listen!: string;
+  @Prop() playcount!: string;
+
+  @Prop() url!: string;
+
+  handleOpenYoutube() {
+    const id = `${this.trackId} ${this.artistId}`.trim();
+    window.open(`https://www.youtube.com/results?search_query=${id}`);
+  }
+
+  handleOpenSpotify() {
+    const id = `${this.trackId} ${this.artistId}`.trim();
+    window.open(`https://open.spotify.com/search/${id}`);
+  }
+
+  get trackId() {
+    return this.$route.params.trackId || ``;
+  }
+
+  get artistId() {
+    return this.$route.params.artistId || ``;
+  }
 }
 </script>
 
 <style lang="scss" scoped>
+.dropdown-container {
+  position: relative;
+
+  .dropdown-content {
+    position: absolute;
+    left: 0;
+    top: 0px;
+    display: flex;
+    flex-direction: column;
+    width: 151px;
+    background-color: #fff;
+    padding: 15px 10px;
+    opacity: 0;
+    border-radius: 5px;
+    transition: opacity 0.2s, height 0.5s;
+    height: 0;
+  }
+
+  &:hover {
+    .dropdown-content {
+      opacity: 1;
+      height: 110px;
+    }
+  }
+
+  .dropdown-content-item {
+    color: #121212;
+    padding: 10px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.5s;
+
+    &:hover {
+      background-color: #aca4a483;
+    }
+  }
+}
+
 .header-controlls {
   margin: 32px 0;
   display: flex;
@@ -60,10 +129,19 @@ export default class HeaderControls extends Vue {
   color: #10171E;
   display: flex;
   align-items: center;
+  height: 60px;
+  cursor: pointer;
 }
 
 .btn-play {
   padding: 12px 55px 12px 35px;
+  background-color: #6b6b6b;
+  text-decoration: none;
+  transition: background-color 0.1s;
+
+  &:hover {
+    background-color: lighten(#6b6b6b, 20%);
+  }
 }
 
 .text {

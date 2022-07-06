@@ -4,39 +4,58 @@
 
     <div class="songs-list">
       <Song
-        v-for="({ title, img, listen, time }, key) in songs"
+        v-for="({ name, image, listeners, playcount }, key) in songList"
+        :onClick="() => onClick(name)"
         :key="key"
-        :title="title"
-        :img="img"
-        :listen="listen"
-        :time="time"
+        :title="name"
+        :img="image[0]['#text']"
+        :listeners="getListeners(listeners)"
+        :playcount="getListeners(playcount)"
         :index="key + 1"
       />
     </div>
 
-    <p class="show-more">
-      Показати все
+    <p class="show-more" @click="fullSongList = !fullSongList">
+      {{fullSongList ? `Показати менше` : `Показати все`}}
     </p>
   </section>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from '@smyld/vue-property-decorator';
-import Song from '@/components/Song.vue';
+import { Component, Vue } from "@smyld/vue-property-decorator";
+import { ScrobblerApi } from "@/api/ScrobblerApi";
+import { decorateNumberOfListeners } from "@/utils";
+import Song from "@/components/Song.vue";
 
 @Component({
   components: { Song },
 })
 export default class Songs extends Vue {
-  data() {
-    return {
-      songs: Array.from({ length: 4 }, () => ({
-        title: `2step (Ukrainian Remix)`,
-        listen: `1 500 500`,
-        time: `2:33`,
-        img: `https://dvamelomana.com.ua/wp-content/uploads/2021/06/Antit__la___Hello__2019__5caf11d351005-1.png`,
-      })),
-    };
+  songs: any[] = [];
+
+  fullSongList = false;
+
+  getListeners = decorateNumberOfListeners;
+
+  onClick(track: string) {
+    this.$router.push(`/track/${this.artistId}/${track}`);
+  }
+
+  mounted() {
+    this.fetch();
+  }
+
+  async fetch() {
+    const { toptracks } = await ScrobblerApi.getArtistTopTracks(this.artistId);
+    this.songs = toptracks.track;
+  }
+
+  get artistId() {
+    return this.$route.params.artistId as string;
+  }
+
+  get songList() {
+    return this.fullSongList ? this.songs : this.songs.slice(0, 5);
   }
 }
 </script>

@@ -4,36 +4,34 @@
 
     <div class="songs-list">
       <Song
-        v-for="({ title, img, listen, time }, key) in songs"
-        :key="key"
-        :title="title"
-        :img="img"
-        :listen="listen"
-        :time="time"
-        :index="key + 1"
+        :title="songName"
+        :img="songImg"
+        :listeners="getListeners(songPlaycount)"
+        :playcount="songDuration"
+        :index="1"
       />
     </div>
   </section>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from '@smyld/vue-property-decorator';
-import Song from '@/components/Song.vue';
+import { Component, Vue, Prop } from "@smyld/vue-property-decorator";
+import { decorateNumberOfListeners } from "@/utils";
+import Song from "@/components/Song.vue";
 
 @Component({
   components: { Song },
 })
 export default class Songs extends Vue {
-  data() {
-    return {
-      songs: [{
-        title: `2step (Ukrainian Remix)`,
-        listen: `1 500 500`,
-        time: `2:33`,
-        img: `https://dvamelomana.com.ua/wp-content/uploads/2021/06/Antit__la___Hello__2019__5caf11d351005-1.png`,
-      }],
-    };
-  }
+  getListeners = decorateNumberOfListeners;
+
+  @Prop() songImg!: string;
+
+  @Prop() songName!: string;
+
+  @Prop() songDuration!: string;
+
+  @Prop() songPlaycount!: string;
 }
 </script>
 

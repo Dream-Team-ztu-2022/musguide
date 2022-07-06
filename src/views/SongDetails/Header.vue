@@ -1,39 +1,65 @@
 <template>
   <section class="header">
     <div class="info">
-      <h2 class="subtitle">Ed sheeran ft. Antytila</h2>
-      <h1 class="title">2step (Ukrainian Remix)</h1>
+      <h2 class="subtitle">{{artistName}}</h2>
+      <h1 class="title">{{name}}</h1>
 
-      <header-controlls listen="5 млн." listening="500 тис." />
+      <header-controls
+        :listeners="getListeners(listeners)"
+        :playcount="getListeners(playcount)"
+        :url="trackUrl"
+      />
 
       <div class="footer">
-        <p class="description">Пісня випущена під час кровопролитної
-          війни проти рашистської федерації, СЛАВА УКРАЇНІ!!!!</p>
+        <p class="description" v-html="description"></p>
         <div class="grid-container">
-          <div class="grid-item">Тривалість</div>
-          <div class="grid-item">1 композиція 2:33</div>
-          <div class="grid-item">Дата релізу</div>
-          <div class="grid-item">2 травня 2022</div>
+          <template v-if="duration !== '0:0'">
+            <div class="grid-item">Тривалість</div>
+            <div class="grid-item">1 композиція {{duration}}</div>
+          </template>
+          <template v-if="published">
+            <div class="grid-item">Дата релізу</div>
+            <div class="grid-item">{{published}}</div>
+          </template>
         </div>
       </div>
-      <p class="details">
-        Докладніше
-      </p>
     </div>
 
-    <img src="https://24tv.ua/resources/photos/news/3952x3034_DIR/202111/1792915_15356127.jpg?202111085916" class="img">
-    <img src="https://dvamelomana.com.ua/wp-content/uploads/2021/06/Antit__la___Hello__2019__5caf11d351005-1.png" class="song-img">
+    <img v-if="img" :src="img" class="background-cover" alt="Cover image">
+    <img v-else src="../../assets/no-img.svg" class="background-cover" alt="No cover image">
+    <img v-if="img" :src="img" class="song-cover" alt="Song cover image">
   </section>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from '@smyld/vue-property-decorator';
-import HeaderControlls from '@/components/HeaderControls.vue';
+import { Component, Vue, Prop } from "@smyld/vue-property-decorator";
+import { decorateNumberOfListeners } from "@/utils";
+import HeaderControls from "@/components/HeaderControls.vue";
 
 @Component({
-  components: { HeaderControlls },
+  components: { HeaderControls },
 })
-export default class Header extends Vue {}
+export default class Header extends Vue {
+  getListeners = decorateNumberOfListeners;
+
+  @Prop() name!: string;
+
+  @Prop() artistName!: string;
+
+  @Prop() description!: string;
+
+  @Prop() duration!: string;
+
+  @Prop() published!: string;
+
+  @Prop() img!: string;
+
+  @Prop() listeners!: string;
+
+  @Prop() playcount!: string;
+
+  @Prop() trackUrl!: string;
+}
 </script>
 
 <style lang="scss" scoped>
@@ -70,8 +96,9 @@ export default class Header extends Vue {}
   font-size: 24px;
   margin-bottom: 24px;
   max-width: 628px;
+  height: 200px;
+  overflow: auto;
   white-space: break-spaces;
-  line-height: 30px;
 }
 
 .footer {
@@ -82,16 +109,6 @@ export default class Header extends Vue {}
   @media (max-width: 1365px) {
     width: 100%;
   }
-}
-
-.details {
-  font-weight: 700;
-  font-size: 24px;
-  color: #A5AAAF;
-  text-transform: uppercase;
-  margin: 0;
-  line-height: 30px;
-  margin-top: 24px;
 }
 
 .info {
@@ -105,7 +122,7 @@ export default class Header extends Vue {}
   z-index: 11;
 }
 
-.img {
+.background-cover {
   position: absolute;
   top: 0;
   right: 0;
@@ -115,7 +132,7 @@ export default class Header extends Vue {}
   z-index: 10;
 }
 
-.song-img {
+.song-cover {
   position: absolute;
   top: 260px;
   right: 37px;
