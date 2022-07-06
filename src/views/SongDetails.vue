@@ -47,23 +47,23 @@ export default class SongDetails extends Vue {
 
   getTime = getTime;
 
-  artistName = "";
+  artistName = ``;
 
-  name = "";
+  name = ``;
 
-  description = "";
+  description = ``;
 
-  duration = "";
+  duration = ``;
 
-  published = "";
+  published = ``;
 
-  img = "";
+  img = ``;
 
-  listeners = "";
+  listeners = ``;
 
-  playcount = "";
+  playcount = ``;
 
-  trackUrl = "";
+  trackUrl = ``;
 
   tags = [];
 
@@ -79,7 +79,7 @@ export default class SongDetails extends Vue {
     this.description = track.wiki?.content;
     this.duration = getTime(track.duration);
     this.published = track.wiki?.published;
-    this.img = track.album?.image?.[3]?.["#text"];
+    this.img = track.album?.image?.[3]?.[`#text`];
     this.listeners = track.listeners;
     this.playcount = track.playcount;
     this.tags = track.toptags.tag.map((tag: any) => tag.name);

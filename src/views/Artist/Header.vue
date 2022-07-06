@@ -28,17 +28,17 @@ import HeaderControlls from "@/components/HeaderControls.vue";
   components: { HeaderControlls },
 })
 export default class Header extends Vue {
-  name = "";
+  name = ``;
 
-  listeners = "";
+  listeners = ``;
 
-  playcount = "";
+  playcount = ``;
 
-  description = "";
+  description = ``;
 
-  artistUrl = "";
+  artistUrl = ``;
 
-  img = "";
+  img = ``;
 
   getListeners = getListeners;
 
@@ -48,12 +48,12 @@ export default class Header extends Vue {
 
   async fetch() {
     const { artist } = await ScrobblerApi.getArtist(this.$route.params.artistId as string);
-    let imageUrl = "";
+    let imageUrl = ``;
     try {
       const data = await MusicBrainzApi.getArtist(artist.mbid);
-      imageUrl = data?.relations.find((x: any) => x.type === "image").url.resource;
-      if (imageUrl.startsWith("https://commons.wikimedia.org/wiki/File:")) {
-        const filename = imageUrl.substring(imageUrl.lastIndexOf("/") + 1);
+      imageUrl = data?.relations.find((x: any) => x.type === `image`).url.resource;
+      if (imageUrl.startsWith(`https://commons.wikimedia.org/wiki/File:`)) {
+        const filename = imageUrl.substring(imageUrl.lastIndexOf(`/`) + 1);
         imageUrl = `https://commons.wikimedia.org/wiki/Special:Redirect/file/${filename}`;
       }
     } catch (e) {

@@ -13,18 +13,21 @@
       <div class="footer">
         <p class="description" v-html="description"></p>
         <div class="grid-container">
-          <div class="grid-item">Тривалість</div>
-          <div class="grid-item">1 композиція {{duration}}</div>
-          <div class="grid-item">Дата релізу</div>
-          <div class="grid-item">{{published}}</div>
+          <template v-if="duration !== '0:0'">
+            <div class="grid-item">Тривалість</div>
+            <div class="grid-item">1 композиція {{duration}}</div>
+          </template>
+          <template v-if="published">
+            <div class="grid-item">Дата релізу</div>
+            <div class="grid-item">{{published}}</div>
+          </template>
         </div>
       </div>
     </div>
 
-    <img v-if="img" :src="img" class="img">
-    <img v-else :src="img" class="song-img">
-    <img v-if="!img" src="../../assets/no-img.svg" class="img">
-    <img v-else src="../../assets/no-img.svg" class="song-img">
+    <img v-if="img" :src="img" class="background-cover">
+    <img v-else src="../../assets/no-img.svg" class="background-cover">
+    <img v-if="img" :src="img" class="song-cover">
   </section>
 </template>
 
@@ -119,7 +122,7 @@ export default class Header extends Vue {
   z-index: 11;
 }
 
-.img {
+.background-cover {
   position: absolute;
   top: 0;
   right: 0;
@@ -129,7 +132,7 @@ export default class Header extends Vue {
   z-index: 10;
 }
 
-.song-img {
+.song-cover {
   position: absolute;
   top: 260px;
   right: 37px;
