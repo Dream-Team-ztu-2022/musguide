@@ -4,7 +4,7 @@
 
     <div class="songs-list">
       <Song
-        v-for="({ name, image, listeners, playcount }, key) in songs.slice(0, songsCount)"
+        v-for="({ name, image, listeners, playcount }, key) in songList"
         :onClick="() => onClick(name)"
         :key="key"
         :title="name"
@@ -15,8 +15,8 @@
       />
     </div>
 
-    <p class="show-more" @click="handleShowMore">
-      {{songsCount === 5 ? 'Показати все': 'Показати менше'}}
+    <p class="show-more" @click="fullSongList = !fullSongList">
+      {{fullSongList ? `Показати менше` : `Показати все`}}
     </p>
   </section>
 </template>
@@ -27,21 +27,15 @@ import { ScrobblerApi } from "@/api/ScrobblerApi";
 import { getListeners } from "@/utils";
 import Song from "@/components/Song.vue";
 
-const SONGS_COUNT = 5;
-
 @Component({
   components: { Song },
 })
 export default class Songs extends Vue {
   songs: any[] = [];
 
-  songsCount = SONGS_COUNT;
+  fullSongList = false;
 
   getListeners = getListeners;
-
-  handleShowMore() {
-    this.songsCount = this.songsCount === 5 ? Infinity : 5;
-  }
 
   onClick(track: string) {
     this.$router.push(`/track/${this.$route?.params?.artistId as string}/${track}`);
@@ -56,6 +50,10 @@ export default class Songs extends Vue {
       this.$route?.params?.artistId as string,
     );
     this.songs = toptracks.track;
+  }
+
+  get songList() {
+    return this.fullSongList ? this.songs : this.songs.slice(0, 5);
   }
 }
 </script>
