@@ -2,8 +2,7 @@
   <div class="song" @click="onClick">
     <div class="song-block">
       <div class="index">{{index}}</div>
-      <img :src="img" alt="song-img" class="img" v-if="img"/>
-      <img src="https://www.glyric.com/modules/custom/glyrics_custom/images/player_default_cover.png" alt="song-img" class="img" v-if="!img"/>
+      <img :src="img || DEFAULT_SONG_COVER" alt="song cover" class="img"/>
 
       {{title}}
     </div>
@@ -18,8 +17,11 @@
 
 <script lang="ts">
 import { Prop, Vue } from "@smyld/vue-property-decorator";
+import { DEFAULT_SONG_COVER } from '@/constants';
 
 export default class Song extends Vue {
+  DEFAULT_SONG_COVER = DEFAULT_SONG_COVER;
+
   @Prop() title!: string;
 
   @Prop() listeners!: string;

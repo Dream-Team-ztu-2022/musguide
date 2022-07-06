@@ -25,9 +25,9 @@
       </div>
     </div>
 
-    <img v-if="img" :src="img" class="background-cover">
-    <img v-else src="../../assets/no-img.svg" class="background-cover">
-    <img v-if="img" :src="img" class="song-cover">
+    <img v-if="img" :src="img" class="background-cover" alt="Cover image">
+    <img v-else src="../../assets/no-img.svg" class="background-cover" alt="No cover image">
+    <img v-if="img" :src="img" class="song-cover" alt="Song cover image">
   </section>
 </template>
 
