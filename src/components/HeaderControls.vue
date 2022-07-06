@@ -68,8 +68,8 @@ export default class HeaderControls extends Vue {
 
   .dropdown-content {
     position: absolute;
-    bottom: -83px;
     left: 0;
+    top: 0px;
     display: flex;
     flex-direction: column;
     width: 151px;
@@ -93,8 +93,10 @@ export default class HeaderControls extends Vue {
     padding: 10px 5px;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.5s;
+
     &:hover {
-      background-color: #aea8a8;
+      background-color: #aca4a483;
     }
   }
 }

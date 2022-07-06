@@ -4,7 +4,7 @@
       <h2 class="subtitle">{{artistName}}</h2>
       <h1 class="title">{{name}}</h1>
 
-      <header-controlls
+      <header-controls
         :listeners="getListeners(listeners)"
         :playcount="getListeners(playcount)"
         :url="trackUrl"
@@ -34,10 +34,10 @@
 <script lang="ts">
 import { Component, Vue, Prop } from "@smyld/vue-property-decorator";
 import { getListeners } from "@/utils";
-import HeaderControlls from "@/components/HeaderControls.vue";
+import HeaderControls from "@/components/HeaderControls.vue";
 
 @Component({
-  components: { HeaderControlls },
+  components: { HeaderControls },
 })
 export default class Header extends Vue {
   getListeners = getListeners
