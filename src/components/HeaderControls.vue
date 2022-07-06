@@ -6,12 +6,12 @@
     </a>
 
     <div class="dropdown-container">
-      <button class="button" @click="handleDropdownOpen">
+      <button class="button">
         <img src="../assets/menu.svg" alt="menu" />
       </button>
 
-      <div class="dropdown-content" v-if="isDropdownOpen">
-        <div class="dropdown-content-item" @click="handleOpenYoutube" >
+      <div class="dropdown-content">
+        <div class="dropdown-content-item" @click="handleOpenYoutube">
           Listen on youtube
         </div>
         <div class="dropdown-content-item" @click="handleOpenSpotify">
@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <div class="text">
+    <div class="text" v-if="listeners">
       <div class="title">
         Слухають
       </div>
@@ -29,7 +29,7 @@
       </div>
     </div>
 
-    <div class="text">
+    <div class="text" v-if="playcount">
       <div class="title">
         Прослухано
       </div>
@@ -50,8 +50,6 @@ export default class HeaderControls extends Vue {
 
   @Prop() url!: string;
 
-  isDropdownOpen = false;
-
   handleOpenYoutube() {
     const id = `${this.$route.params.trackId || ""} ${this.$route.params.artistId}`.trim();
     window.open(`https://www.youtube.com/results?search_query=${id}`);
@@ -61,41 +59,43 @@ export default class HeaderControls extends Vue {
     const id = `${this.$route.params.trackId || ""} ${this.$route.params.artistId}`.trim();
     window.open(`https://open.spotify.com/search/${id}`);
   }
-
-  handleDropdownOpen() {
-    this.isDropdownOpen = true;
-  }
-
-  handleDropdownClose() {
-    this.isDropdownOpen = false;
-  }
 }
 </script>
 
 <style lang="scss" scoped>
 .dropdown-container {
   position: relative;
-}
 
-.dropdown-content {
-  width: 151px;
-  background-color: #fff;
-  padding: 15px 10px;
-  position: absolute;
-  bottom: -83px;
-  left: 0;
-  display: flex;
-  flex-direction: column;
-  border-radius: 5px;
-}
+  .dropdown-content {
+    position: absolute;
+    bottom: -83px;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    width: 151px;
+    background-color: #fff;
+    padding: 15px 10px;
+    opacity: 0;
+    border-radius: 5px;
+    transition: opacity 0.2s, height 0.5s;
+    height: 0;
+  }
 
-.dropdown-content-item {
-  color: #121212;
-  padding: 10px 5px;
-  border-radius: 5px;
-  cursor: pointer;
   &:hover {
-    background-color: #aea8a8;
+    .dropdown-content {
+      opacity: 1;
+      height: 110px;
+    }
+  }
+
+  .dropdown-content-item {
+    color: #121212;
+    padding: 10px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    &:hover {
+      background-color: #aea8a8;
+    }
   }
 }
 
@@ -127,6 +127,11 @@ export default class HeaderControls extends Vue {
   padding: 12px 55px 12px 35px;
   background-color: #6b6b6b;
   text-decoration: none;
+  transition: background-color 0.1s;
+
+  &:hover {
+    background-color: lighten(#6b6b6b, 20%);
+  }
 }
 
 .text {
